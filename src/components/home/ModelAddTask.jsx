@@ -19,8 +19,8 @@ function ModelAddTask() {
       </div>
 
       <div className='self-end w-full border-t-[1px] border-gray-800 flex justify-end items-center gap-2 pt-3'>
-        <button className='rounded bg-slate-800 text-xs font-semibold py-1 px-3'>Cancel</button>
-        <button className='rounded bg-primary text-xs font-semibold py-1 px-3'>Add task</button>
+        <button className='rounded bg-slate-800 hover:bg-slate-900 duration-150 text-xs font-semibold py-1 px-3'>Cancel</button>
+        <button className='rounded bg-primary hover:bg-red-600 duration-150 text-xs font-semibold py-1 px-3'>Add task</button>
       </div>
     </div>
   );

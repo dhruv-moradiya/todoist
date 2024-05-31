@@ -3,7 +3,7 @@ import { sidebarNavigation } from '../constants/sidebar';
 
 function SideBar() {
   return (
-    <div className="flex h-screen flex-col gap-4 bg-light-dark px-3 py-3 font-light">
+    <div className="h-screen w-full flex flex-col gap-4 bg-yellow-300 px-3 py-3 font-light">
       {/* Top part */}
       <div className="flex items-center justify-between pl-2">
         <div className="flex items-center gap-4">
