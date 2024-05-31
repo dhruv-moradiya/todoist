@@ -17,10 +17,30 @@
     'opsz' 24;
 }
 
+.scrollbar::-webkit-scrollbar {
+  width: 4px;
+  background: black;
+  border-radius: 50px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  width: 4px;
+  background: white;
+  border-radius: 50px;
+}
+
+.dragIcon {
+  opacity: 0;
+}
+
+.todoBox:hover .dragIcon {
+  opacity: 1;
+}
+
 .circle {
   display: flex;
-  align-items: center; /* Center vertically */
-  justify-content: center; /* Center horizontally */
+  align-items: center;
+  justify-content: center;
   position: relative;
 }
 
