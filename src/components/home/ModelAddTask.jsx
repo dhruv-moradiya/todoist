@@ -3,12 +3,12 @@ import { DueDate, Priority } from '../../constants/svg';
 import CustomButton from '../common/CustomButton';
 import ModelDueDate from './ModelDueDate';
 
-function ModelAddTask({ setIsAddTaskModelOpen, addTaskModelRef }) {
+function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
 
   const [isDueDateModelOpen, setIsDueDateModelOpen] = useState(false)
 
   function closeModel() {
-    setIsAddTaskModelOpen(false);
+    setIsTaskModelOpen(false);
   }
   function openDueDateModel(e) {
     e.stopPropagation()

@@ -1,9 +1,9 @@
 import { memo } from "react"
 import CustomButton from "../common/CustomButton";
 
-function ModelAddSection({ setIsAddSectionModelOpen }) {
+function ModelAddSection({ setIsSectionModelOpen }) {
   function closeModel() {
-    setIsAddSectionModelOpen(false)
+    setIsSectionModelOpen(false)
   }
   return (
     <div className="w-full m-8">
