@@ -1,8 +1,25 @@
+import { memo, useState } from 'react';
 import { DueDate, Priority } from '../../constants/svg';
+import CustomButton from '../common/CustomButton';
+import ModelDueDate from './ModelDueDate';
 
-function ModelAddTask() {
+function ModelAddTask({ setIsAddTaskModelOpen, addTaskModelRef }) {
+
+  const [isDueDateModelOpen, setIsDueDateModelOpen] = useState(false)
+
+  function closeModel() {
+    setIsAddTaskModelOpen(false);
+  }
+  function openDueDateModel(e) {
+    e.stopPropagation()
+    setIsDueDateModelOpen(true)
+  }
+  function closeDueDateModel() {
+    setIsDueDateModelOpen(false)
+  }
+
   return (
-    <div className="flex w-[700px] flex-col gap-2 border-[1px] border-gray-800 rounded-md py-3 px-4">
+    <div ref={addTaskModelRef} className="flex w-full flex-col gap-2 rounded-md border-[1px] border-gray-800 px-4 py-3" onClick={closeDueDateModel}>
       <input
         type="text"
         placeholder="Task name"
@@ -13,24 +30,32 @@ function ModelAddTask() {
         className="border-none bg-dark outline-0 placeholder:text-xs placeholder:font-semibold"
         rows={1}
       />
-      <div className='flex items-center gap-2'>
-        <Button svg={<DueDate />} name="Due Date" />
+      <div className="flex items-center gap-2 relative">
+        <Button svg={<DueDate />} name="Due Date" onClick={openDueDateModel} />
         <Button svg={<Priority />} name="Priority" />
+        {isDueDateModelOpen && <ModelDueDate />}
       </div>
 
-      <div className='self-end w-full border-t-[1px] border-gray-800 flex justify-end items-center gap-2 pt-3'>
-        <button className='rounded bg-slate-800 hover:bg-slate-900 duration-150 text-xs font-semibold py-1 px-3'>Cancel</button>
-        <button className='rounded bg-primary hover:bg-red-600 duration-150 text-xs font-semibold py-1 px-3'>Add task</button>
+      <div className="flex w-full items-center justify-end gap-2 self-end border-t-[1px] border-gray-800 pt-3">
+        <CustomButton
+          styles="bg-slate-800 hover:bg-slate-900"
+          onClick={closeModel}
+          buttonName="Cancel"
+        />
+        <CustomButton
+          styles="bg-primary hover:bg-red-600"
+          buttonName="Add task"
+        />
       </div>
     </div>
   );
 }
 
-export default ModelAddTask;
+export default memo(ModelAddTask);
 
-function Button({ svg, name }) {
+function Button({ svg, name, onClick }) {
   return (
-    <button className="flex w-fit items-center gap-1 rounded-[5px] border-[1px] border-gray-500 px-[5px] py-[1.5px] text-xs hover:bg-gray-500">
+    <button className="flex w-fit items-center gap-1 rounded-[5px] border-[1px] border-gray-500 px-[5px] py-[1.5px] text-xs hover:bg-gray-500" onClick={onClick}>
       {svg}
       <span>{name}</span>
     </button>

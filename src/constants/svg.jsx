@@ -6,15 +6,15 @@ export function Priority() {
       height="16"
       fill="none"
       viewBox="0 0 16 16"
-      class="g1pQExb"
+      className="g1pQExb"
       data-icon-name="priority-icon"
       data-priority="4"
     >
       <path
         fill="currentColor"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M2 3a.5.5 0 0 1 .276-.447C3.025 2.179 4.096 2 5.5 2c.901 0 1.485.135 2.658.526C9.235 2.885 9.735 3 10.5 3c1.263 0 2.192-.155 2.776-.447A.5.5 0 0 1 14 3v6.5a.5.5 0 0 1-.276.447c-.749.375-1.82.553-3.224.553-.901 0-1.485-.135-2.658-.526C6.765 9.615 6.265 9.5 5.5 9.5c-1.08 0-1.915.113-2.5.329V13.5a.5.5 0 0 1-1 0V3Zm1 5.779v-5.45C3.585 3.113 4.42 3 5.5 3c.765 0 1.265.115 2.342.474C9.015 3.865 9.599 4 10.5 4c1.002 0 1.834-.09 2.5-.279v5.45c-.585.216-1.42.329-2.5.329-.765 0-1.265-.115-2.342-.474C6.985 8.635 6.401 8.5 5.5 8.5c-1.001 0-1.834.09-2.5.279Z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
       ></path>
     </svg>
   );
@@ -27,7 +27,7 @@ export function DueDate() {
       width="16"
       height="16"
       viewBox="0 0 16 16"
-      class=""
+      className=""
     >
       <path
         fill="currentColor"
@@ -67,49 +67,45 @@ export function DragIcon() {
 
 export function Edit() {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="12"
-      height="12"
-      fill="none"
-      viewBox="0 0 12 12"
-      className="calendar_icon"
-    >
-      <path
-        fill="currentColor"
-        fillRule="evenodd"
-        d="M9.5 1h-7A1.5 1.5 0 0 0 1 2.5v7A1.5 1.5 0 0 0 2.5 11h7A1.5 1.5 0 0 0 11 9.5v-7A1.5 1.5 0 0 0 9.5 1ZM2 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-7ZM8.75 8a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM3.5 4a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5Z"
-        clipRule="evenodd"
-      ></path>
+    <svg width="24" height="24">
+      <g fill="none" fillRule="evenodd">
+        <path
+          fill="currentColor"
+          d="M9.5 19h10a.5.5 0 1 1 0 1h-10a.5.5 0 1 1 0-1z"
+        ></path>
+        <path
+          stroke="currentColor"
+          d="M4.42 16.03a1.5 1.5 0 0 0-.43.9l-.22 2.02a.5.5 0 0 0 .55.55l2.02-.21a1.5 1.5 0 0 0 .9-.44L18.7 7.4a1.5 1.5 0 0 0 0-2.12l-.7-.7a1.5 1.5 0 0 0-2.13 0L4.42 16.02z"
+        ></path>
+      </g>
     </svg>
   );
 }
 
 export function Today() {
-
-  const today = new Date().getDate()
+  const today = new Date().getDate();
 
   return (
     <svg
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      class="scheduler-suggestions-item-icon--today"
+      className="scheduler-suggestions-item-icon--today"
       aria-hidden="true"
       focusable="false"
     >
-      <g fill="currentColor" fill-rule="evenodd">
+      <g fill="currentColor" fillRule="evenodd">
         <path
-          fill-rule="nonzero"
+          fillRule="nonzero"
           d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H6zm1 3h10a.5.5 0 1 1 0 1H7a.5.5 0 0 1 0-1z"
         ></path>
         <text
-          font-family="-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
-          font-size="9"
+          fontFamily="-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+          fontSize="9"
           transform="translate(4 2)"
-          font-weight="500"
+          fontWeight="500"
         >
-          <tspan x="8" y="15" text-anchor="middle">
+          <tspan x="8" y="15" textAnchor="middle">
             {today}
           </tspan>
         </text>
@@ -126,15 +122,15 @@ export function Tomorrow() {
       height="24"
       fill="none"
       viewBox="0 0 24 24"
-      class="scheduler-suggestions-item-icon--tomorrow"
+      className="scheduler-suggestions-item-icon--tomorrow"
       aria-hidden="true"
       focusable="false"
     >
       <path
         fill="currentColor"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M9.704 17.544a.5.5 0 0 0-.653.27l-.957 2.31a.5.5 0 1 0 .924.383l.956-2.31a.5.5 0 0 0-.27-.653Zm5.931-14.32a.5.5 0 0 0-.653.27l-.957 2.31a.5.5 0 1 0 .924.383l.957-2.31a.5.5 0 0 0-.27-.653ZM9.704 6.457a.5.5 0 0 1-.653-.27l-.957-2.31a.5.5 0 1 1 .924-.383l.956 2.31a.5.5 0 0 1-.27.653Zm5.931 14.32a.5.5 0 0 1-.653-.27l-.957-2.31a.5.5 0 0 1 .924-.383l.957 2.31a.5.5 0 0 1-.27.653ZM7.5 12a4.5 4.5 0 1 0 9 0 4.5 4.5 0 0 0-9 0Zm8 0a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-9.314 2.95a.5.5 0 0 0-.383-.924l-2.31.957a.5.5 0 0 0 .383.924l2.31-.957Zm14.32-5.932a.5.5 0 1 0-.383-.924l-2.31.957a.5.5 0 0 0 .383.924l2.31-.957Zm-2.692 5.932a.5.5 0 1 1 .383-.924l2.31.957a.5.5 0 0 1-.384.924l-2.31-.957ZM3.494 9.018a.5.5 0 0 1 .382-.924l2.31.957a.5.5 0 1 1-.383.924l-2.31-.957Z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
       ></path>
     </svg>
   );
@@ -147,7 +143,7 @@ export function NextWeekend() {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      class="scheduler-suggestions-item-icon--weekend"
+      className="scheduler-suggestions-item-icon--weekend"
       aria-hidden="true"
       focusable="false"
     >
@@ -167,15 +163,54 @@ export function NextWeek() {
       height="24"
       fill="none"
       viewBox="0 0 24 24"
-      class="scheduler-suggestions-item-icon--next-week"
+      className="scheduler-suggestions-item-icon--next-week"
       aria-hidden="true"
       focusable="false"
     >
       <path
         fill="currentColor"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M18 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM5 6a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6Zm8.354 4.647a.5.5 0 0 0-.708.707l1.647 1.647H8.5a.5.5 0 1 0 0 1h5.793l-1.647 1.646a.5.5 0 0 0 .708.707l2.5-2.5a.5.5 0 0 0 0-.707l-2.5-2.5ZM7 8a.5.5 0 0 0 0 1h10a.5.5 0 0 0 0-1H7Z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
+      ></path>
+    </svg>
+  );
+}
+
+export function SideBarButton() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M19 4.001H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-12a2 2 0 0 0-2-2Zm-15 2a1 1 0 0 1 1-1h4v14H5a1 1 0 0 1-1-1v-12Zm6 13h9a1 1 0 0 0 1-1v-12a1 1 0 0 0-1-1h-9v14Z"
+        clipRule="evenodd"
+      ></path>
+    </svg>
+  );
+}
+
+export function Calendar() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="12"
+      height="12"
+      fill="none"
+      viewBox="0 0 12 12"
+      className="calendar_icon"
+    >
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M9.5 1h-7A1.5 1.5 0 0 0 1 2.5v7A1.5 1.5 0 0 0 2.5 11h7A1.5 1.5 0 0 0 11 9.5v-7A1.5 1.5 0 0 0 9.5 1ZM2 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-7ZM8.75 8a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM3.5 4a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5Z"
+        clipRule="evenodd"
       ></path>
     </svg>
   );

@@ -6,7 +6,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Lato', sans-serif;
+  fontfamily: 'Lato', sans-serif;
 }
 
 .material-symbols-outlined {
@@ -29,11 +29,13 @@
   border-radius: 50px;
 }
 
-.dragIcon {
+.dragIcon,
+.editIcon {
   opacity: 0;
 }
 
-.todoBox:hover .dragIcon {
+.todoBox:hover .dragIcon,
+.todoBox:hover .editIcon {
   opacity: 1;
 }
 

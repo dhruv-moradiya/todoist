@@ -41,10 +41,10 @@ function ModelDueDate() {
   }
 
   return (
-    <div className="flex w-[250px] flex-col gap-2 rounded-md border-[1px] border-gray-800 px-2 py-3">
+    <div className="flex w-[250px] flex-col gap-2 rounded-md bg-light-dark px-2 py-3 absolute top-full">
       <input
         type="date"
-        className="bg-dark pl-1 text-base"
+        className="bg-light-dark pl-1 text-base"
         value={getDate()}
         min={getDate()}
         max="2999-12-31"
@@ -54,7 +54,7 @@ function ModelDueDate() {
           return (
             <button
               key={index}
-              className="flex w-full items-center rounded p-1 hover:bg-light-dark"
+              className="flex gap-1 w-full items-center rounded p-1 pr-2 hover:bg-dark"
             >
               <div className={`${item.color} `}>{item.svg}</div>
               <p className="grow text-start font-bold">{item.title}</p>
