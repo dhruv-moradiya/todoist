@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import ModelAddTask from '../components/home/ModelAddTask';
-import { Arrow, SideBarButton, View } from '../constants/svg';
+import { Arrow } from '../constants/svg';
 import DraggableCard from '../components/home/DraggableCard';
 import AddTaskButton from '../components/home/AddTaskButton';
 import ModelAddSection from '../components/home/ModelAddSection';
-import { useTodoContext } from '../context/TodoContext';
+import ViewNav from '../components/common/ViewNav';
+import ModelPriority from '../components/home/ModelPriority';
+import ModelProjectSelect from '../components/home/ModelProjectSelect';
 
 function Inbox() {
-  const { isSidebarOpen, setIsSidebarOpen } = useTodoContext();
   const [data, setData] = useState([1, 2, 3, 4]);
   const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
   const [isSectionModelOpen, setIsSectionModelOpen] = useState(false);
-  const [whichSection, setWhichSection] = useState(0);
+  const [whichSectionModel, setWhichSectionMode] = useState(0);
+  const [whichSection, setWhichSection] = useState([0])
 
   const btnRef = useRef(null);
   const addTaskModelRef = useRef(null);
@@ -48,27 +50,20 @@ function Inbox() {
     };
   }, [isTaskModelOpen]);
 
-  function openSideBar() {
-    setIsSidebarOpen(true);
+  function handleClick(index) {
+    if (whichSection.includes(index)) {
+      setWhichSection(whichSection.filter(item => item !== index))
+    } else {
+      setWhichSection((prev) => [...prev, index]);
+    }
   }
 
 
   return (
     <div className="scrollbar md:w-[calc(100% - 64px)] lg:w-[calc(100% - 160px)] xl:w-[calc(100% - 384px)] flex max-h-screen flex-col gap-2 overflow-y-scroll px-8 py-3 sm:px-12 md:px-8 lg:px-20 xl:px-48">
-      <div className="flex w-full justify-between md:justify-end">
-        {!isSidebarOpen && (
-          <button
-            className="rounded-md px-2 py-[5px] hover:bg-amber-hover-effect md:hidden"
-            onClick={openSideBar}
-          >
-            <SideBarButton />
-          </button>
-        )}
-        <button className="flex w-fit items-center gap-2 rounded-[4px] px-3 py-[4px] duration-200 hover:bg-[#80808024]">
-          <View />
-          <p className="text-xs">View</p>
-        </button>
-      </div>
+
+      <ViewNav />
+      <ModelProjectSelect />
 
       <div className="flex w-full flex-col items-center justify-center gap-2">
         <h2 className="self-start text-3xl font-bold">Inbox</h2>
@@ -76,56 +71,66 @@ function Inbox() {
         {new Array(5).fill(null).map((item, index) => {
           return (
             <>
-              <DragDropContext key={index} onDragEnd={handleDragging}>
-                <div className="w-full flex-col gap-6">
-                  <button className="mb-3 w-full self-start text-[16.5px] font-semibold flex  items-center gap-1">
-                    <div className="w-[30px]">
-                      <Arrow />
-                    </div>
-                    <h2 className="w-fit">(No section)</h2>
-                  </button>
-                  <Droppable droppableId="TODO">
-                    {(provided) => (
-                      <ul
-                        className="flex w-full flex-col items-start"
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                      >
-                        <DraggableCard data={data} />
-                        {provided.placeholder}
-                      </ul>
-                    )}
-                  </Droppable>
+              <button
+                className="mb-3 flex w-full items-center gap-1 self-start  text-[16.5px] font-semibold"
+                onClick={() => handleClick(index)}
+              >
+                <div
+                  className={`w-[30px] ${whichSection.includes(index) ? "rotate-90" : "rotate-0"}`}
+                >
+                  <Arrow />
                 </div>
-              </DragDropContext>
+                <h2 className="w-fit">(No section)</h2>
+              </button>
 
-              <AddTaskButton
-                index={index}
-                whichSection={whichSection}
-                setWhichSection={setWhichSection}
-                isTaskModelOpen={isTaskModelOpen}
-                setIsTaskModelOpen={setIsTaskModelOpen}
-                btnRef={btnRef}
-              />
+              <div
+                className={`w-full duration-300 ${whichSection.includes(index) ? "h-auto" : "h-0 overflow-hidden"}`}
+              >
+                <DragDropContext key={index} onDragEnd={handleDragging}>
+                  <div className="w-full flex-col gap-6">
+                    <Droppable droppableId="TODO">
+                      {(provided) => (
+                        <ul
+                          className="flex w-full flex-col items-start"
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                        >
+                          <DraggableCard data={data} />
+                          {provided.placeholder}
+                        </ul>
+                      )}
+                    </Droppable>
+                  </div>
 
-              {isTaskModelOpen && index === whichSection && (
-                <ModelAddTask
-                  setIsTaskModelOpen={setIsTaskModelOpen}
-                  addTaskModelRef={addTaskModelRef}
-                />
-              )}
+                  <AddTaskButton
+                    index={index}
+                    whichSectionModel={whichSectionModel}
+                    setWhichSectionMode={setWhichSectionMode}
+                    isTaskModelOpen={isTaskModelOpen}
+                    setIsTaskModelOpen={setIsTaskModelOpen}
+                    btnRef={btnRef}
+                  />
 
-              {isSectionModelOpen && index === whichSection && (
-                <ModelAddSection
-                  setIsSectionModelOpen={setIsSectionModelOpen}
-                />
-              )}
+                  {isTaskModelOpen && index === whichSectionModel && (
+                    <ModelAddTask
+                      setIsTaskModelOpen={setIsTaskModelOpen}
+                      addTaskModelRef={addTaskModelRef}
+                    />
+                  )}
 
-              <AddSectionButton
-                setIsSectionModelOpen={setIsSectionModelOpen}
-                index={index}
-                setWhichSection={setWhichSection}
-              />
+                  {isSectionModelOpen && index === whichSectionModel && (
+                    <ModelAddSection
+                      setIsSectionModelOpen={setIsSectionModelOpen}
+                    />
+                  )}
+
+                  <AddSectionButton
+                    setIsSectionModelOpen={setIsSectionModelOpen}
+                    index={index}
+                    setWhichSectionMode={setWhichSectionMode}
+                  />
+                </DragDropContext>
+              </div>
             </>
           );
         })}
@@ -136,10 +141,10 @@ function Inbox() {
 
 export default Inbox;
 
-function AddSectionButton({ setIsSectionModelOpen, index, setWhichSection }) {
+function AddSectionButton({ setIsSectionModelOpen, index, setWhichSectionMode }) {
   function openAddSectionModel() {
     setIsSectionModelOpen(true);
-    setWhichSection(index);
+    setWhichSectionMode(index);
   }
   return (
     <button

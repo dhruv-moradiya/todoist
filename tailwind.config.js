@@ -4,8 +4,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#DE4C4A',
-        dark: '#1E1E1E',
+        "primary": '#DE4C4A',
+        "light-primary": "#472525",
+        "dark": '#1E1E1E',
         'light-dark': '#262626',
         'dark-font': '#d6d3d1',
         'amber-hover-effect': '#ffa2000f',

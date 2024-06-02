@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .section-button {
+    @apply cursor-pointer rounded px-3 py-1 text-xs font-semibold duration-150;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -44,8 +50,15 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  cursor: pointer;
 }
 
 .check {
   position: absolute;
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+.circle:hover .check {
+  opacity: 1;
 }
