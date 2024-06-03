@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import ModelAddTask from '../components/home/ModelAddTask';
 import { Arrow } from '../constants/svg';
-import DraggableCard from '../components/home/DraggableCard';
-import AddTaskButton from '../components/home/AddTaskButton';
-import ModelAddSection from '../components/home/ModelAddSection';
+import DraggableCard from '../components/inbox/DraggableCard';
+import AddTaskButton from '../components/inbox/AddTaskButton';
+
 import ViewNav from '../components/common/ViewNav';
-import ModelPriority from '../components/home/ModelPriority';
-import ModelProjectSelect from '../components/home/ModelProjectSelect';
+import ModelAddTask from '../components/common/Models/ModelAddTask';
+import ModelAddSection from '../components/common/Models/ModelAddSection';
 
 function Inbox() {
   const [data, setData] = useState([1, 2, 3, 4]);
@@ -63,14 +62,13 @@ function Inbox() {
     <div className="scrollbar md:w-[calc(100% - 64px)] lg:w-[calc(100% - 160px)] xl:w-[calc(100% - 384px)] flex max-h-screen flex-col gap-2 overflow-y-scroll px-8 py-3 sm:px-12 md:px-8 lg:px-20 xl:px-48">
 
       <ViewNav />
-      <ModelProjectSelect />
 
       <div className="flex w-full flex-col items-center justify-center gap-2">
         <h2 className="self-start text-3xl font-bold">Inbox</h2>
 
-        {new Array(5).fill(null).map((item, index) => {
+        {new Array(5).fill(null).map((_, index) => {
           return (
-            <>
+            <div key={index} className='w-full'>
               <button
                 className="mb-3 flex w-full items-center gap-1 self-start  text-[16.5px] font-semibold"
                 onClick={() => handleClick(index)}
@@ -131,7 +129,7 @@ function Inbox() {
                   />
                 </DragDropContext>
               </div>
-            </>
+            </div>
           );
         })}
       </div>

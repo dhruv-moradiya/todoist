@@ -4,7 +4,7 @@ import { Calendar, DragIcon, Edit } from '../../constants/svg';
 function TodoCard({ item }) {
   return (
     <>
-      <div className="dragIcon rounded-md p-1 text-base hover:bg-light-dark">
+      <div className="dragIcon rounded-md p-1 text-base hover:bg-light-dark hidden sm:block">
         <DragIcon />
       </div>
 

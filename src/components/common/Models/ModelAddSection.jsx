@@ -1,5 +1,5 @@
 import { memo } from "react"
-import CustomButton from "../common/CustomButton";
+import CustomButton from "../CustomButton";
 
 function ModelAddSection({ setIsSectionModelOpen }) {
   function closeModel() {
@@ -18,8 +18,6 @@ function ModelAddSection({ setIsSectionModelOpen }) {
           onClick={closeModel}
           buttonName="Cancel"
         />
-        {/* <button className='rounded bg-primary hover:bg-red-600 duration-150 text-xs font-semibold py-1 px-3'>Add Section</button>
-        <button className='rounded bg-slate-800 hover:bg-slate-900 duration-150 text-xs font-semibold py-1 px-3'>Cancel</button> */}
       </div>
     </div>
   )
