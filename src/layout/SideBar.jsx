@@ -4,16 +4,14 @@ import { SideBarButton } from '../constants/svg';
 import { useTodoContext } from '../context/TodoContext';
 
 function SideBar() {
-
-  const { setIsSidebarOpen } = useTodoContext()
+  const { setIsSidebarOpen } = useTodoContext();
 
   function closeSidebar() {
-    setIsSidebarOpen(false)
+    setIsSidebarOpen(false);
   }
 
-
   return (
-    <div className="h-screen w-full flex flex-col gap-4 bg-light-dark px-3 py-3 font-light">
+    <div className="flex h-screen w-full flex-col gap-4 bg-light-dark px-3 py-3 font-light">
       {/* Top part */}
       <div className="flex items-center justify-between pl-2">
         <div className="flex items-center gap-4">
@@ -26,7 +24,10 @@ function SideBar() {
           </div>
           <h3 className="text-base font-semibold">Gojo Saturo</h3>
         </div>
-        <button className='cursor-pointer rounded-md px-2 py-[5px] text-xl font-light hover:bg-amber-hover-effect' onClick={closeSidebar}>
+        <button
+          className="cursor-pointer rounded-md px-2 py-[5px] text-xl font-light hover:bg-amber-hover-effect"
+          onClick={closeSidebar}
+        >
           <SideBarButton />
         </button>
       </div>

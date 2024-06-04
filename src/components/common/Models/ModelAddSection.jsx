@@ -1,14 +1,18 @@
-import { memo } from "react"
-import CustomButton from "../CustomButton";
+import { memo } from 'react';
+import CustomButton from '../CustomButton';
 
 function ModelAddSection({ setIsSectionModelOpen }) {
   function closeModel() {
-    setIsSectionModelOpen(false)
+    setIsSectionModelOpen(false);
   }
   return (
-    <div className="w-full m-8">
-      <input type="text" placeholder="Name this section" className="w-full p-1 border-[1px] border-gray-800 rounded-md bg-dark outline-0 placeholder:font-semibold text-base" />
-      <div className='w-full border-gray-800 flex items-center gap-2 pt-3'>
+    <div className="m-8 w-full">
+      <input
+        type="text"
+        placeholder="Name this section"
+        className="w-full rounded-md border-[1px] border-gray-800 bg-dark p-1 text-base outline-0 placeholder:font-semibold"
+      />
+      <div className="flex w-full items-center gap-2 border-gray-800 pt-3">
         <CustomButton
           styles="section-button bg-primary hover:bg-red-600"
           buttonName="Add Section"
@@ -20,7 +24,7 @@ function ModelAddSection({ setIsSectionModelOpen }) {
         />
       </div>
     </div>
-  )
+  );
 }
 
 export default memo(ModelAddSection);

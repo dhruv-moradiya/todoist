@@ -3,10 +3,10 @@ import { Priority, Check } from '../../../constants/svg';
 
 function ModelPriority({ priority, setPriority, setPriorityModelOpen }) {
   function handleClick(e, item) {
-    e.stopPropagation()
-    setPriorityModelOpen(false)
+    e.stopPropagation();
+    setPriorityModelOpen(false);
 
-    setPriority(item)
+    setPriority(item);
   }
   return (
     <ul className="absolute left-16 top-full z-20 flex w-[140px] flex-col items-center rounded bg-light-dark px-2 py-1">

@@ -13,7 +13,7 @@ function Inbox() {
   const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
   const [isSectionModelOpen, setIsSectionModelOpen] = useState(false);
   const [whichSectionModel, setWhichSectionMode] = useState(0);
-  const [whichSection, setWhichSection] = useState([0])
+  const [whichSection, setWhichSection] = useState([0]);
 
   const btnRef = useRef(null);
   const addTaskModelRef = useRef(null);
@@ -51,16 +51,14 @@ function Inbox() {
 
   function handleClick(index) {
     if (whichSection.includes(index)) {
-      setWhichSection(whichSection.filter(item => item !== index))
+      setWhichSection(whichSection.filter((item) => item !== index));
     } else {
       setWhichSection((prev) => [...prev, index]);
     }
   }
 
-
   return (
     <div className="scrollbar md:w-[calc(100% - 64px)] lg:w-[calc(100% - 160px)] xl:w-[calc(100% - 384px)] flex max-h-screen flex-col gap-2 overflow-y-scroll px-8 py-3 sm:px-12 md:px-8 lg:px-20 xl:px-48">
-
       <ViewNav />
 
       <div className="flex w-full flex-col items-center justify-center gap-2">
@@ -68,13 +66,13 @@ function Inbox() {
 
         {new Array(5).fill(null).map((_, index) => {
           return (
-            <div key={index} className='w-full'>
+            <div key={index} className="w-full">
               <button
                 className="mb-3 flex w-full items-center gap-1 self-start  text-[16.5px] font-semibold"
                 onClick={() => handleClick(index)}
               >
                 <div
-                  className={`w-[30px] ${whichSection.includes(index) ? "rotate-90" : "rotate-0"}`}
+                  className={`w-[30px] ${whichSection.includes(index) ? 'rotate-90' : 'rotate-0'}`}
                 >
                   <Arrow />
                 </div>
@@ -82,7 +80,7 @@ function Inbox() {
               </button>
 
               <div
-                className={`w-full duration-300 ${whichSection.includes(index) ? "h-auto" : "h-0 overflow-hidden"}`}
+                className={`w-full duration-300 ${whichSection.includes(index) ? 'h-auto' : 'h-0 overflow-hidden'}`}
               >
                 <DragDropContext key={index} onDragEnd={handleDragging}>
                   <div className="w-full flex-col gap-6">
@@ -139,7 +137,11 @@ function Inbox() {
 
 export default Inbox;
 
-function AddSectionButton({ setIsSectionModelOpen, index, setWhichSectionMode }) {
+function AddSectionButton({
+  setIsSectionModelOpen,
+  index,
+  setWhichSectionMode,
+}) {
   function openAddSectionModel() {
     setIsSectionModelOpen(true);
     setWhichSectionMode(index);

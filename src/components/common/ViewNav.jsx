@@ -1,7 +1,6 @@
-import { memo } from "react";
-import { useTodoContext } from "../../context/TodoContext";
-import { SideBarButton, View } from "../../constants/svg";
-
+import { memo } from 'react';
+import { useTodoContext } from '../../context/TodoContext';
+import { SideBarButton, View } from '../../constants/svg';
 
 function ViewNav() {
   const { isSidebarOpen, setIsSidebarOpen } = useTodoContext();
@@ -23,7 +22,7 @@ function ViewNav() {
         <p className="text-xs">View</p>
       </button>
     </div>
-  )
+  );
 }
 
 export default memo(ViewNav);

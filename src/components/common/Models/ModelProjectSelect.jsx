@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Check, HashTag, Inbox, Section } from '../../../constants/svg';
 import CustomButton from '../CustomButton';
 
-function ModelProjectSelect({ setIsProjectModelOpen, projectPath, setProjectPath }) {
+function ModelProjectSelect({ setIsProjectModelOpen, setProjectPath }) {
   const section = [
     {
       project_name: 'Home',
@@ -15,20 +15,23 @@ function ModelProjectSelect({ setIsProjectModelOpen, projectPath, setProjectPath
   ];
 
   function handleClick(e, item, project_name) {
-    e.stopPropagation()
-    if (item === "Inbox") {
-      setProjectPath(item)
+    e.stopPropagation();
+    if (item === 'Inbox') {
+      setProjectPath(item);
     } else {
-      console.log("first")
-      setProjectPath(`${project_name}/${item}`)
+      console.log('first');
+      setProjectPath(`${project_name}/${item}`);
     }
-
+    setIsProjectModelOpen(false);
   }
 
   return (
-    <div className="z-20 flex w-[280px] flex-col rounded-md bg-light-dark p-2 text-[13px] absolute top-full left-0">
+    <div
+      className="absolute left-0 top-full z-20 flex w-[280px] flex-col rounded-md bg-light-dark p-2 text-[13px]"
+      onClick={(e) => e.stopPropagation()}
+    >
       <CustomButton
-        onClick={(e) => handleClick(e, "Inbox")}
+        onClick={(e) => handleClick(e, 'Inbox')}
         styles="flex items-center gap-2 p-1 hover:bg-dark rounded"
         buttonName={
           <>
@@ -50,7 +53,12 @@ function ModelProjectSelect({ setIsProjectModelOpen, projectPath, setProjectPath
           return (
             <div key={item + index} className="flex flex-col gap-1 pr-4">
               <ProjectHeading heading={item.project_name} />
-              <Sections item={item} onClick={(e, section) => handleClick(e, section, item.project_name)} />
+              <Sections
+                item={item}
+                onClick={(e, section) =>
+                  handleClick(e, section, item.project_name)
+                }
+              />
             </div>
           );
         })}

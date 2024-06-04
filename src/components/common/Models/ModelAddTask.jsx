@@ -32,7 +32,7 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
         )
       }
     >
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         {dueDate && (
           <p className="rounded-md bg-light-primary px-2 py-1 text-xs">
             {dueDate}
