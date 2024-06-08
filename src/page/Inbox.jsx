@@ -7,6 +7,8 @@ import AddTaskButton from '../components/inbox/AddTaskButton';
 import ViewNav from '../components/common/ViewNav';
 import ModelAddTask from '../components/common/Models/ModelAddTask';
 import ModelAddSection from '../components/common/Models/ModelAddSection';
+import { useDispatch } from 'react-redux';
+import { fetchUserData } from '../redux/userSlice';
 
 function Inbox() {
   const [data, setData] = useState([1, 2, 3, 4]);
@@ -15,9 +17,10 @@ function Inbox() {
   const [whichSectionModel, setWhichSectionMode] = useState(0);
   const [whichSection, setWhichSection] = useState([0]);
 
+  const dispatch = useDispatch();
   const btnRef = useRef(null);
   const addTaskModelRef = useRef(null);
-  const dueDateModelRef = useRef(null);
+  // const dueDateModelRef = useRef(null);
 
   function handleDragging(result) {
     const { source, destination } = result;
@@ -33,6 +36,9 @@ function Inbox() {
   }
 
   useEffect(() => {
+    dispatch(
+      fetchUserData(JSON.parse(localStorage.getItem('todoist_user')).id)
+    );
     function handleClickOutside(e) {
       if (
         isTaskModelOpen &&

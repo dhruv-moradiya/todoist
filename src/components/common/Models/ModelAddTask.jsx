@@ -11,6 +11,7 @@ import {
   openPriorityModel,
   openProjectSelectModelOpen,
 } from './helperModels';
+import { useDispatch } from 'react-redux';
 
 function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
   const [isDueDateModelOpen, setIsDueDateModelOpen] = useState(false);
@@ -19,6 +20,24 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
   const [dueDate, setDueDate] = useState(null);
   const [priority, setPriority] = useState(null);
   const [projectPath, setProjectPath] = useState(null);
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+
+  const dispatch = useDispatch()
+
+  // function handle() {
+  //   console.log("first")
+  //   dispatch(addTodo({
+  //     title,
+  //     description,
+  //     time: Date.now(),
+  //     completed: false,
+  //     priority,
+  //     dueDate,
+  //     projectPath
+  //   }))
+
+  // }
 
   return (
     <div
@@ -55,11 +74,15 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
         type="text"
         placeholder="Task name"
         className="border-none bg-dark outline-0 placeholder:text-base placeholder:font-semibold"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
       />
       <textarea
         placeholder="Description"
         className="border-none bg-dark text-[13.5px] outline-0 placeholder:text-xs placeholder:font-semibold"
         rows={1}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
       />
       <div className="relative flex items-center gap-2">
         <Button

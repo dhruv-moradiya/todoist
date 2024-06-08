@@ -2,6 +2,7 @@ import React from 'react';
 import { sidebarNavigation } from '../constants/sidebar';
 import { SideBarButton } from '../constants/svg';
 import { useTodoContext } from '../context/TodoContext';
+import { useSelector } from 'react-redux';
 
 function SideBar() {
   const { setIsSidebarOpen } = useTodoContext();
@@ -9,6 +10,8 @@ function SideBar() {
   function closeSidebar() {
     setIsSidebarOpen(false);
   }
+
+  const userData = useSelector(store => store.user.userData)
 
   return (
     <div className="flex h-screen w-full flex-col gap-4 bg-light-dark px-3 py-3 font-light">
@@ -18,11 +21,11 @@ function SideBar() {
           <div className="h-7 w-7 overflow-hidden rounded-full">
             <img
               className="h-full w-full object-cover"
-              src="https://img.etimg.com/thumb/width-1200,height-1200,imgsize-37850,resizemode-75,msid-106580228/news/international/us/jujutsu-kaisen-preview-is-gojo-making-a-return-key-details-here.jpg"
-              alt="User"
+              src={userData?.photoURL}
+              alt={userData?.name}
             />
           </div>
-          <h3 className="text-base font-semibold">Gojo Saturo</h3>
+          <h3 className="text-base font-semibold">{userData?.name}</h3>
         </div>
         <button
           className="cursor-pointer rounded-md px-2 py-[5px] text-xl font-light hover:bg-amber-hover-effect"
