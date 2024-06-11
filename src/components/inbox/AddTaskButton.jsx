@@ -1,14 +1,14 @@
 function AddTaskButton({
   index,
   whichSectionModel,
-  setWhichSectionMode,
+  setWhichSectionModel,
   isTaskModelOpen,
   setIsTaskModelOpen,
   btnRef,
 }) {
   function openAddTaskModel() {
     setIsTaskModelOpen(true);
-    setWhichSectionMode(index);
+    setWhichSectionModel(index);
   }
 
   return (

@@ -8,6 +8,12 @@ import { useNavigate } from 'react-router-dom';
 function SignUp() {
 
   const navigate = useNavigate()
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    getValues,
+  } = useForm();
 
   async function createUser(data) {
     console.log(data)
@@ -55,20 +61,10 @@ function SignUp() {
         })
 
     } catch (error) {
-      console.log("Error: ", error)
+      console.log("Error at create new user: ", error.message)
     }
   }
 
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    getValues,
-  } = useForm();
-
-  function onSubmit(data) {
-    console.log('data', data);
-  }
   return (
     <div className="flex h-screen w-screen items-center justify-center bg-dark text-dark-font">
       <form

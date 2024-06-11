@@ -14,8 +14,8 @@ function Inbox() {
   const [data, setData] = useState([1, 2, 3, 4]);
   const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
   const [isSectionModelOpen, setIsSectionModelOpen] = useState(false);
-  const [whichSectionModel, setWhichSectionMode] = useState(0);
-  const [whichSection, setWhichSection] = useState([0]);
+  const [whichSectionModel, setWhichSectionModel] = useState(0); // Kya section nu model open chhe.
+  const [whichSection, setWhichSection] = useState([0]);  // kyo section open chhe.
 
   const dispatch = useDispatch();
   const btnRef = useRef(null);
@@ -107,7 +107,7 @@ function Inbox() {
                   <AddTaskButton
                     index={index}
                     whichSectionModel={whichSectionModel}
-                    setWhichSectionMode={setWhichSectionMode}
+                    setWhichSectionModel={setWhichSectionModel}
                     isTaskModelOpen={isTaskModelOpen}
                     setIsTaskModelOpen={setIsTaskModelOpen}
                     btnRef={btnRef}
@@ -129,7 +129,7 @@ function Inbox() {
                   <AddSectionButton
                     setIsSectionModelOpen={setIsSectionModelOpen}
                     index={index}
-                    setWhichSectionMode={setWhichSectionMode}
+                    setWhichSectionModel={setWhichSectionModel}
                   />
                 </DragDropContext>
               </div>
@@ -146,11 +146,11 @@ export default Inbox;
 function AddSectionButton({
   setIsSectionModelOpen,
   index,
-  setWhichSectionMode,
+  setWhichSectionModel,
 }) {
   function openAddSectionModel() {
     setIsSectionModelOpen(true);
-    setWhichSectionMode(index);
+    setWhichSectionModel(index);
   }
   return (
     <button

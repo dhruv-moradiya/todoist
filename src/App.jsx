@@ -6,6 +6,7 @@ import SignIn from './page/SignIn';
 import SignUp from './page/SignUp';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import Today from './page/Today';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<Inbox />} />
+                <Route path='/today' element={<Today />} />
               </Route>
               <Route path="/login" element={<SignIn />} />
               <Route path="/sighup" element={<SignUp />} />

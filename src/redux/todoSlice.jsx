@@ -61,18 +61,7 @@ const todoSlice = createSlice({
     isLoading: false,
     error: false,
   },
-  reducers: {
-    // addTodo: (prevState, action) => {
-
-    //   // const docRef = 
-
-    //   // const userDocRef = doc(db, "user", JSON.stringify(localStorage.get("todoist_user")).id)
-    //   // const subCollectionRef = collection(userDocRef, "section");
-
-    // },
-    // deleteTodo: (prevState, action) => { },
-    // updateTodo: (prevState, action) => { },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getTodos.pending, (prevState, action) => {
       prevState.isLoading = true
