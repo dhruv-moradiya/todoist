@@ -19,8 +19,8 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
   const [dueDate, setDueDate] = useState(null);
   const [priority, setPriority] = useState(null);
   const [projectPath, setProjectPath] = useState(null);
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   return (
     <div

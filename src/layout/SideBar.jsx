@@ -11,7 +11,7 @@ function SideBar() {
     setIsSidebarOpen(false);
   }
 
-  const userData = useSelector(store => store.user.userData)
+  const userData = useSelector((store) => store.user.userData);
 
   return (
     <div className="flex h-screen w-full flex-col gap-4 bg-light-dark px-3 py-3 font-light">

@@ -6,8 +6,7 @@ import { Timestamp, doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -16,20 +15,24 @@ function SignUp() {
   } = useForm();
 
   async function createUser(data) {
-    console.log(data)
+    console.log(data);
     try {
-      const { user } = await createUserWithEmailAndPassword(auth, data.email, data.password)
-      console.log("user", user)
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      console.log('user', user);
 
       const storageRef = ref(storage, `${data.name}/${Date.now()}`);
 
-      const uploadTask = uploadBytesResumable(storageRef, data.image[0].name)
+      const uploadTask = uploadBytesResumable(storageRef, data.image[0].name);
 
       uploadTask.on(
         'state_changed',
         null,
         (error) => {
-          console.log(error)
+          console.log(error);
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
@@ -37,31 +40,34 @@ function SignUp() {
 
             await updateProfile(user, {
               displayName: data.name,
-              photoURL: downloadURL
-            })
+              photoURL: downloadURL,
+            });
 
-            await setDoc(doc(db, "user", user.uid), {
+            await setDoc(doc(db, 'user', user.uid), {
               id: user.uid,
               name: user.displayName,
               photoURL: downloadURL,
               email: user.email,
               time: Timestamp.now(),
-            })
+            });
 
-            localStorage.setItem("todoist_user", JSON.stringify({
-              id: user.uid,
-              name: user.displayName,
-              photoURL: downloadURL,
-              email: user.email,
-              time: Timestamp.now(),
-            }))
+            localStorage.setItem(
+              'todoist_user',
+              JSON.stringify({
+                id: user.uid,
+                name: user.displayName,
+                photoURL: downloadURL,
+                email: user.email,
+                time: Timestamp.now(),
+              })
+            );
 
-            navigate("/")
+            navigate('/');
           });
-        })
-
+        }
+      );
     } catch (error) {
-      console.log("Error at create new user: ", error.message)
+      console.log('Error at create new user: ', error.message);
     }
   }
 

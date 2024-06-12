@@ -9,18 +9,21 @@ import ModelAddTask from '../components/common/Models/ModelAddTask';
 import ModelAddSection from '../components/common/Models/ModelAddSection';
 import { useDispatch } from 'react-redux';
 import { fetchUserData } from '../redux/userSlice';
+// import { getData } from '../redux/todoSlice';
 
 function Inbox() {
   const [data, setData] = useState([1, 2, 3, 4]);
   const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
   const [isSectionModelOpen, setIsSectionModelOpen] = useState(false);
   const [whichSectionModel, setWhichSectionModel] = useState(0); // Kya section nu model open chhe.
-  const [whichSection, setWhichSection] = useState([0]);  // kyo section open chhe.
+  const [whichSection, setWhichSection] = useState([0]); // kyo section open chhe.
 
   const dispatch = useDispatch();
   const btnRef = useRef(null);
   const addTaskModelRef = useRef(null);
   // const dueDateModelRef = useRef(null);
+
+  // useEffect(() => { getData() }, [])
 
   function handleDragging(result) {
     const { source, destination } = result;

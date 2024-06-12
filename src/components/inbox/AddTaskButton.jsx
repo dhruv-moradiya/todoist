@@ -1,14 +1,15 @@
 function AddTaskButton({
   index,
-  whichSectionModel,
-  setWhichSectionModel,
+  // activeSectionModal,
+  // setActiveSectionModal,
   isTaskModelOpen,
   setIsTaskModelOpen,
   btnRef,
 }) {
   function openAddTaskModel() {
     setIsTaskModelOpen(true);
-    setWhichSectionModel(index);
+    // console.log("index", index)
+    // setActiveSectionModal(index);
   }
 
   return (
@@ -17,7 +18,8 @@ function AddTaskButton({
       ref={btnRef}
       className="item-center flex w-full gap-[2px] text-base text-gray-500 hover:text-primary"
       style={{
-        opacity: isTaskModelOpen && whichSectionModel === index ? 0 : 1,
+        // opacity: isTaskModelOpen && activeSectionModal === index ? 0 : 1,
+        opacity: isTaskModelOpen ? 0 : 1,
       }}
       onClick={openAddTaskModel}
     >

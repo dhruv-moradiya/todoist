@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 import { addSection } from '../../../redux/todoSlice';
 
 function ModelAddSection({ setIsSectionModelOpen }) {
-  const dispatch = useDispatch()
-  const [section, setSection] = useState("")
-  const [error, setError] = useState(null)
+  const dispatch = useDispatch();
+  const [section, setSection] = useState('');
+  const [error, setError] = useState(null);
 
   function closeModel() {
     setIsSectionModelOpen(false);
@@ -14,15 +14,13 @@ function ModelAddSection({ setIsSectionModelOpen }) {
 
   function addSection() {
     if (!section) {
-      setError("Please add section name.")
+      setError('Please add section name.');
     } else {
-      dispatch(addSection(section))
-      setSection("")
-      setError("")
+      dispatch(addSection(section));
+      setSection('');
+      setError('');
     }
   }
-
-
 
   return (
     <div className="m-8 w-full">
@@ -33,7 +31,7 @@ function ModelAddSection({ setIsSectionModelOpen }) {
         value={section}
         onChange={(e) => setSection(e.target.value)}
       />
-      {error && <p className='text-primary font-semibold text-xs'>{error}</p>}
+      {error && <p className="text-xs font-semibold text-primary">{error}</p>}
       <div className="flex w-full items-center gap-2 border-gray-800 pt-3">
         <CustomButton
           styles="section-button bg-primary hover:bg-red-600"

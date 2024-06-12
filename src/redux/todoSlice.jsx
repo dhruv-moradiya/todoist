@@ -1,6 +1,15 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addDoc, collection, doc, onSnapshot, orderBy, query, setDoc } from "firebase/firestore";
-import { db } from "../firebase/Firebase";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+  setDoc,
+} from 'firebase/firestore';
+import { db } from '../firebase/Firebase';
 
 // export function getTodos() {
 //   const q = query(collection(db, "todos"), orderBy("time", "desc"))
@@ -11,33 +20,33 @@ import { db } from "../firebase/Firebase";
 //   })
 // }
 
-export const getTodos = createAsyncThunk("todos/getTodos", () => {
+export const getTodos = createAsyncThunk('todos/getTodos', () => {
   try {
-    const q = query(collection(db, "todos"), orderBy("time", "desc"))
+    const q = query(collection(db, 'todos'), orderBy('time', 'desc'));
     return onSnapshot(q, (querySnapshot) => {
-      return querySnapshot.docs().map(doc => (
-        { id: doc.id, data: doc.data() }
-      ))
-    })
+      return querySnapshot
+        .docs()
+        .map((doc) => ({ id: doc.id, data: doc.data() }));
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-})
+});
 
 export const addSection = createAsyncThunk(
-  "todos/addSection",
+  'todos/addSection',
   async (sectionName) => {
     try {
-      const user = JSON.parse(localStorage.getItem("todoist_user"))
-      const userRef = doc(db, "user", user.id)
-      const subCollectionRef = collection(userRef, "section")
+      const user = JSON.parse(localStorage.getItem('todoist_user'));
+      const userRef = doc(db, 'user', user.id);
+      const subCollectionRef = collection(userRef, 'section');
       const newDocRef = await addDoc(subCollectionRef, {
-        sectionName
-      })
-      await setDoc(newDocRef, { id: newDocRef.id }, { merge: true })
-      console.log("Done")
+        sectionName,
+      });
+      await setDoc(newDocRef, { id: newDocRef.id }, { merge: true });
+      console.log('Done');
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 );
@@ -54,8 +63,24 @@ export const addSection = createAsyncThunk(
 //   return docRef
 // })
 
+// export async function getData() {
+//   const currentUserId = JSON.parse(localStorage.getItem("todoist_user")).id
+//   const userRef = doc(db, "user", currentUserId)
+//   const sectionRef = collection(userRef, "section")
+
+//   const todosRef = collection(db, "user", "section", "todos")
+//   const snapShot = await getDocs(sectionRef)
+//   const temp = []
+//   snapShot.forEach(docs => {
+//     console.log("first")
+//     console.log("doc", doc)
+//     temp.push(docs.data())
+//   })
+//   console.log("temp", temp)
+// }
+
 const todoSlice = createSlice({
-  name: "todos",
+  name: 'todos',
   initialState: {
     todos: [],
     isLoading: false,
@@ -64,36 +89,35 @@ const todoSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getTodos.pending, (prevState, action) => {
-      prevState.isLoading = true
+      prevState.isLoading = true;
     }),
       builder.addCase(getTodos.fulfilled, (prevState, action) => {
-        prevState.isLoading = false,
-          prevState.error = false,
-          prevState.todos = action.payload
+        (prevState.isLoading = false),
+          (prevState.error = false),
+          (prevState.todos = action.payload);
       }),
       builder.addCase(getTodos.rejected, (prevState, action) => {
-        prevState.isLoading = false,
-          prevState.error = true,
-          prevState.todos = []
-      })
+        (prevState.isLoading = false),
+          (prevState.error = true),
+          (prevState.todos = []);
+      });
     builder.addCase(addSection.pending, (prevState, action) => {
-      prevState.isLoading = true
+      prevState.isLoading = true;
     }),
       builder.addCase(addSection.fulfilled, (prevState, action) => {
-        prevState.isLoading = false,
-          prevState.error = false,
-          prevState.todos = action.payload
+        (prevState.isLoading = false),
+          (prevState.error = false),
+          (prevState.todos = action.payload);
       }),
       builder.addCase(addSection.rejected, (prevState, action) => {
-        prevState.isLoading = false,
-          prevState.error = true,
-          prevState.todos = [...prevState.todos]
-      })
-  }
-})
+        (prevState.isLoading = false),
+          (prevState.error = true),
+          (prevState.todos = [...prevState.todos]);
+      });
+  },
+});
 
 const todoReducer = todoSlice.reducer;
 
 // export const { "" } = todoReducer.actions;
 export default todoReducer;
-

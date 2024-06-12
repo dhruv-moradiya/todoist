@@ -1,9 +1,10 @@
 
 
 function Today() {
-  return (
-    <div>Today</div>
-  )
+  return <div>
+    {/* <InboxBackup /> */}
+    Today
+  </div>;
 }
 
-export default Today
+export default Today;
