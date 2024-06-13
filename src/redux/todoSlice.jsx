@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
 import {
   addDoc,
   collection,
@@ -10,15 +10,7 @@ import {
   setDoc,
 } from 'firebase/firestore';
 import { db } from '../firebase/Firebase';
-
-// export function getTodos() {
-//   const q = query(collection(db, "todos"), orderBy("time", "desc"))
-//   return onSnapshot(q, (querySnapshot) => {
-//     return querySnapshot.docs().map(doc => (
-//       { id: doc.id, data: doc.data() }
-//     ))
-//   })
-// }
+import { addProject, addSection, getProjects } from './thunk';
 
 export const getTodos = createAsyncThunk('todos/getTodos', () => {
   try {
@@ -33,23 +25,23 @@ export const getTodos = createAsyncThunk('todos/getTodos', () => {
   }
 });
 
-export const addSection = createAsyncThunk(
-  'todos/addSection',
-  async (sectionName) => {
-    try {
-      const user = JSON.parse(localStorage.getItem('todoist_user'));
-      const userRef = doc(db, 'user', user.id);
-      const subCollectionRef = collection(userRef, 'section');
-      const newDocRef = await addDoc(subCollectionRef, {
-        sectionName,
-      });
-      await setDoc(newDocRef, { id: newDocRef.id }, { merge: true });
-      console.log('Done');
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
+// export const addSection = createAsyncThunk(
+//   'todos/addSection',
+//   async (sectionName) => {
+//     try {
+//       const user = JSON.parse(localStorage.getItem('todoist_user'));
+//       const userRef = doc(db, 'user', user.id);
+//       const subCollectionRef = collection(userRef, 'section');
+//       const newDocRef = await addDoc(subCollectionRef, {
+//         sectionName,
+//       });
+//       await setDoc(newDocRef, { id: newDocRef.id }, { merge: true });
+//       console.log('Done');
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+// );
 
 // export const addTodo = createAsyncThunk("todos/addTodo", async (todoObj) => {
 //   console.log("addTodo", doc(db, "user", JSON.stringify(localStorage.get("todoist_user")).id))
@@ -88,31 +80,67 @@ const todoSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getTodos.pending, (prevState, action) => {
+    //getProjects thunks
+    builder.addCase(getProjects.pending, (prevState, action) => {
       prevState.isLoading = true;
     }),
-      builder.addCase(getTodos.fulfilled, (prevState, action) => {
-        (prevState.isLoading = false),
-          (prevState.error = false),
-          (prevState.todos = action.payload);
+      builder.addCase(getProjects.fulfilled, (prevState, action) => {
+        prevState.isLoading = false,
+          prevState.error = false,
+          prevState.todos = [...prevState.todos, ...action.payload];
       }),
-      builder.addCase(getTodos.rejected, (prevState, action) => {
-        (prevState.isLoading = false),
-          (prevState.error = true),
-          (prevState.todos = []);
+      builder.addCase(getProjects.rejected, (prevState, action) => {
+        prevState.isLoading = false,
+          prevState.error = true,
+          prevState.todos = [...prevState.todos];
+      }),
+      //addProject thunks
+      builder.addCase(addProject.pending, (prevState, action) => {
+        prevState.isLoading = true;
+      }),
+      builder.addCase(addProject.fulfilled, (prevState, action) => {
+        prevState.isLoading = false;
+        prevState.error = false;
+        prevState.todos = [
+          ...prevState.todos,
+          { section: [], ...action.payload },
+        ];
+      }),
+      builder.addCase(addProject.rejected, (prevState, action) => {
+        prevState.isLoading = false,
+          prevState.error = true,
+          prevState.todos = [...prevState.todos];
       });
+
+    //addSection thunks
     builder.addCase(addSection.pending, (prevState, action) => {
       prevState.isLoading = true;
     }),
       builder.addCase(addSection.fulfilled, (prevState, action) => {
-        (prevState.isLoading = false),
-          (prevState.error = false),
-          (prevState.todos = action.payload);
+        prevState.isLoading = false;
+        prevState.error = false;
+        const { project_id, section_id, section_name } = action.payload;
+
+        // const obj = temp.find(
+        //   (item) => item.project_id === action.payload.project_id
+        // );
+        // obj.section.push({ ...action.payload })
+        // console.log("current", current(prevState.todos))
+        prevState.todos = prevState.todos.map((item) => {
+          if (item.project_id === project_id) {
+            return {
+              ...item,
+              section: [...item.section, { section_id, section_name }],
+            };
+          } else {
+            return item;
+          }
+        });
       }),
       builder.addCase(addSection.rejected, (prevState, action) => {
-        (prevState.isLoading = false),
-          (prevState.error = true),
-          (prevState.todos = [...prevState.todos]);
+        prevState.isLoading = false,
+          prevState.error = true,
+          prevState.todos = [...prevState.todos];
       });
   },
 });

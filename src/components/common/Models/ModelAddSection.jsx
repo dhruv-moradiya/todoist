@@ -1,27 +1,37 @@
 import { memo, useState } from 'react';
 import CustomButton from '../CustomButton';
 import { useDispatch } from 'react-redux';
-import { addSection } from '../../../redux/todoSlice';
+import { useParams } from 'react-router-dom';
+import { addSection } from '../../../redux/thunk';
 
-function ModelAddSection({ setIsSectionModelOpen }) {
+function ModelAddSection({ setIsSectionModelOpen, project_id: id }) {
   const dispatch = useDispatch();
   const [section, setSection] = useState('');
   const [error, setError] = useState(null);
+
+  // const { project_id } = useParams();
 
   function closeModel() {
     setIsSectionModelOpen(false);
   }
 
-  function addSection() {
-    if (!section) {
-      setError('Please add section name.');
-    } else {
-      dispatch(addSection(section));
-      setSection('');
-      setError('');
-    }
-  }
+  // function addSectionFun() {
+  //   if (!section) {
+  //     setError('Please add section name.');
+  //   } else {
+  //     dispatch(addSection(project_id, section));
+  //     setSection('');
+  //     setError('');
+  //   }
+  // }
 
+  function addSectionToFireBase() {
+    dispatch(
+      addSection({ project_id: id ? id : 'inbox', section_name: section })
+    );
+    setSection('');
+  }
+  console.log('id', id);
   return (
     <div className="m-8 w-full">
       <input
@@ -36,7 +46,7 @@ function ModelAddSection({ setIsSectionModelOpen }) {
         <CustomButton
           styles="section-button bg-primary hover:bg-red-600"
           buttonName="Add Section"
-          onClick={addSection}
+          onClick={addSectionToFireBase}
         />
         <CustomButton
           styles="section-button border-1 bg-slate-800 hover:bg-slate-900"

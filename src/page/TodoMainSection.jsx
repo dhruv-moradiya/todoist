@@ -1,23 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import ModelAddSection from '../components/common/Models/ModelAddSection';
 import ViewNav from '../components/common/ViewNav';
-import { fetchUserData } from '../redux/userSlice';
 import SectionAccordionContainer from '../components/common/sectionAccordion/SectionAccordionContainer';
+import { useDispatch } from 'react-redux';
 
+function TodoMainSection({ project, data }) {
+  const dispatch = useDispatch();
 
-function TodoMainSection({ title, data }) {
   const [isSectionModelOpen, setIsSectionModelOpen] = useState(false);
   const [activeSectionModal, setActiveSectionModal] = useState(0); // Kya section nu model open chhe.
   const [activeSections, setActiveSections] = useState([0]); // kyo section open chhe.
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(
-      fetchUserData(JSON.parse(localStorage.getItem('todoist_user')).id)
-    );
-  }, []);
 
   function handleClick(index) {
     if (activeSections.includes(index)) {
@@ -32,7 +24,9 @@ function TodoMainSection({ title, data }) {
       <ViewNav />
 
       <div className="flex w-full flex-col items-center justify-center gap-2">
-        <h2 className="self-start text-3xl font-bold">Inbox</h2>
+        <h2 className="self-start text-3xl font-bold">
+          {project?.project_name}
+        </h2>
 
         {new Array(5).fill(null).map((_, index) => {
           return (
@@ -46,6 +40,7 @@ function TodoMainSection({ title, data }) {
               {isSectionModelOpen && index === activeSectionModal && (
                 <ModelAddSection
                   setIsSectionModelOpen={setIsSectionModelOpen}
+                  project_id={project?.project_id}
                 />
               )}
 
@@ -58,7 +53,7 @@ function TodoMainSection({ title, data }) {
           );
         })}
       </div>
-    </div >
+    </div>
   );
 }
 
@@ -69,7 +64,6 @@ function AddSectionButtonBackup({
   index,
   setWhichSectionModel,
 }) {
-
   function openAddSectionModel() {
     setIsSectionModelOpen(true);
     setWhichSectionModel(index);

@@ -5,7 +5,7 @@ function SectionAccordionContainer({
   tasks = [1, 2, 3, 4],
   activeSections,
   handleClick,
-  index
+  index,
 }) {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-2">

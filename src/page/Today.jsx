@@ -1,10 +1,11 @@
-
+import TodoMainSection from './TodoMainSection';
 
 function Today() {
-  return <div>
-    {/* <InboxBackup /> */}
-    Today
-  </div>;
+  return (
+    <div>
+      <TodoMainSection title="Today" />
+    </div>
+  );
 }
 
 export default Today;
