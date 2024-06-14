@@ -11,6 +11,8 @@ import {
   openPriorityModel,
   openProjectSelectModelOpen,
 } from './helperModels';
+import { useDispatch } from 'react-redux';
+import { addTodo } from '../../../redux/thunk';
 
 function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
   const [isDueDateModelOpen, setIsDueDateModelOpen] = useState(false);
@@ -21,6 +23,11 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
   const [projectPath, setProjectPath] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const dispatch = useDispatch()
+
+  function handleAddTodo() {
+    dispatch(addTodo())
+  }
 
   return (
     <div

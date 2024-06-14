@@ -58,7 +58,6 @@ function SignUp() {
                 name: user.displayName,
                 photoURL: downloadURL,
                 email: user.email,
-                time: Timestamp.now(),
               })
             );
 

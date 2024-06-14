@@ -19,6 +19,8 @@ function TodoMainSection({ project, data }) {
     }
   }
 
+  // if (!project) return null;
+
   return (
     <div className="scrollbar md:w-[calc(100% - 64px)] lg:w-[calc(100% - 160px)] xl:w-[calc(100% - 384px)] flex max-h-screen flex-col gap-2 overflow-y-scroll px-8 py-3 sm:px-12 md:px-8 lg:px-20 xl:px-48">
       <ViewNav />
@@ -35,6 +37,7 @@ function TodoMainSection({ project, data }) {
                 activeSections={activeSections}
                 handleClick={handleClick}
                 index={index}
+                project_id={project?.project_id}
               />
 
               {isSectionModelOpen && index === activeSectionModal && (

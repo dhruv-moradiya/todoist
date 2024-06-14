@@ -1,14 +1,31 @@
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
+import { auth } from '../firebase/Firebase';
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
+  const navigate = useNavigate();
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
-  function onSubmit(data) {
-    console.log('data', data);
+  async function onSubmit(data) {
+    const { user } = await signInWithEmailAndPassword(auth, data.email, data.password)
+    const { uid, displayName, photoURL, email } = user
+
+    localStorage.setItem(
+      'todoist_user',
+      JSON.stringify({
+        id: uid,
+        name: displayName,
+        photoURL,
+        email: email,
+      })
+    );
+    navigate("/")
   }
 
   return (
@@ -41,7 +58,7 @@ function SignIn() {
           </div>
           <div className="flex flex-col gap-0">
             <input
-              type="text"
+              type="password"
               placeholder="Password"
               className="w-[300px] rounded-md border-none px-2 py-2 text-black outline-none placeholder:text-[13px]"
               {...register('password', {

@@ -12,6 +12,7 @@ function Inbox() {
   useEffect(() => {
     dispatch(
       fetchUserData(JSON.parse(localStorage.getItem('todoist_user')).id)
+      // fetchUserData("keoAMbgWq7bYEqgMrJztBaT0cxC3")
     );
   }, []);
 

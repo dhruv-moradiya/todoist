@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { sidebarNavigation } from '../constants/sidebar';
 import { SideBarButton } from '../constants/svg';
 import { useTodoContext } from '../context/TodoContext';
@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ModelAddProject from '../components/common/Models/ModelAddProject';
 import Loader from '../components/common/Loader';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase/Firebase';
 
 function SideBar() {
   const [addProjectModelOpen, setAddProjectModelOpen] = useState(false);
@@ -17,6 +19,13 @@ function SideBar() {
 
   function closeSidebar() {
     setIsSidebarOpen(false);
+  }
+
+  async function logOutUser() {
+    console.log("Log out")
+    await signOut(auth)
+    localStorage.removeItem("todoist_user")
+    console.log("User Log out.")
   }
 
   return (
@@ -33,6 +42,7 @@ function SideBar() {
           </div>
           <h3 className="text-base font-semibold">{userData?.name}</h3>
         </div>
+        <button onClick={logOutUser}>Logout</button>
         <button
           className="cursor-pointer rounded-md px-2 py-[5px] text-xl font-light hover:bg-amber-hover-effect"
           onClick={closeSidebar}
@@ -105,4 +115,4 @@ function SideBar() {
   );
 }
 
-export default SideBar;
+export default memo(SideBar);

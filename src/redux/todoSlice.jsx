@@ -1,16 +1,12 @@
 import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
 import {
-  addDoc,
   collection,
-  doc,
-  getDocs,
   onSnapshot,
   orderBy,
   query,
-  setDoc,
 } from 'firebase/firestore';
 import { db } from '../firebase/Firebase';
-import { addProject, addSection, getProjects } from './thunk';
+import { addProject, addSection, getProjects, getSection } from './thunk';
 
 export const getTodos = createAsyncThunk('todos/getTodos', () => {
   try {
@@ -71,6 +67,8 @@ export const getTodos = createAsyncThunk('todos/getTodos', () => {
 //   console.log("temp", temp)
 // }
 
+
+
 const todoSlice = createSlice({
   name: 'todos',
   initialState: {
@@ -80,21 +78,21 @@ const todoSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    //getProjects thunks
+    //getProjects thunk
     builder.addCase(getProjects.pending, (prevState, action) => {
       prevState.isLoading = true;
     }),
       builder.addCase(getProjects.fulfilled, (prevState, action) => {
-        prevState.isLoading = false,
-          prevState.error = false,
-          prevState.todos = [...prevState.todos, ...action.payload];
+        (prevState.isLoading = false),
+          (prevState.error = false),
+          (prevState.todos = [...prevState.todos, ...action.payload]);
       }),
       builder.addCase(getProjects.rejected, (prevState, action) => {
-        prevState.isLoading = false,
-          prevState.error = true,
-          prevState.todos = [...prevState.todos];
+        (prevState.isLoading = false),
+          (prevState.error = true),
+          (prevState.todos = [...prevState.todos]);
       }),
-      //addProject thunks
+      //addProject thunk
       builder.addCase(addProject.pending, (prevState, action) => {
         prevState.isLoading = true;
       }),
@@ -107,12 +105,12 @@ const todoSlice = createSlice({
         ];
       }),
       builder.addCase(addProject.rejected, (prevState, action) => {
-        prevState.isLoading = false,
-          prevState.error = true,
-          prevState.todos = [...prevState.todos];
+        (prevState.isLoading = false),
+          (prevState.error = true),
+          (prevState.todos = [...prevState.todos]);
       });
 
-    //addSection thunks
+    //addSection thunk
     builder.addCase(addSection.pending, (prevState, action) => {
       prevState.isLoading = true;
     }),
@@ -138,9 +136,34 @@ const todoSlice = createSlice({
         });
       }),
       builder.addCase(addSection.rejected, (prevState, action) => {
-        prevState.isLoading = false,
-          prevState.error = true,
-          prevState.todos = [...prevState.todos];
+        (prevState.isLoading = false),
+          (prevState.error = true),
+          (prevState.todos = [...prevState.todos]);
+      });
+
+    //getSection thunk
+    builder.addCase(getSection.pending, (prevState, action) => {
+      prevState.isLoading = true;
+    }),
+      builder.addCase(getSection.fulfilled, (prevState, action) => {
+        const { project_id, sectionData } = action.payload;
+        prevState.todos = prevState.todos.map((item) => {
+          if (item.project_id === project_id) {
+            console.log("if")
+            return {
+              ...item,
+              section: [...item.section, ...sectionData],
+            };
+          } else {
+            console.log("else")
+            return item;
+          }
+        });
+      }),
+      builder.addCase(getSection.rejected, (prevState, action) => {
+        (prevState.isLoading = false),
+          (prevState.error = true),
+          (prevState.todos = [...prevState.todos]);
       });
   },
 });
