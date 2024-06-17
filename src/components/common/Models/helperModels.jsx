@@ -70,7 +70,7 @@ export function openProjectSelectModelOpen(
 /* ModelDueDate [Start] */
 
 export function getDate(timeStamp) {
-  const day = ['Sun', 'Mon', 'Tue', 'Wen', 'Thu', 'Fir', 'Sat'];
+  const day = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", " Sunday"];
 
   const today = new Date(timeStamp);
   const date = today.getDate();
@@ -119,7 +119,9 @@ export function getDate(timeStamp) {
 }
 
 export const getTimeStamp = (dateStr) => {
-  const date = new Date(`${dateStr}T00:00:00Z`);
+  const dateRev = dateStr.split("-").reverse().join("-")
+
+  const date = new Date(`${dateRev}T00:00:00Z`);
 
   const timestamp = date.getTime();
 

@@ -12,7 +12,7 @@ function TodoMainSection({ project, section, title }) {
   const [activeSectionModal, setActiveSectionModal] = useState(0); // Kya section nu model open chhe.
   const [activeSections, setActiveSections] = useState([0]); // kyo section open chhe.
 
-  console.log('TodoMainSection => section: ', section);
+  // console.log('TodoMainSection => section: ', section);
 
   function handleClick(index) {
     if (activeSections.includes(index)) {
@@ -81,7 +81,7 @@ function TodoMainSection({ project, section, title }) {
               </>
             ) : (
               <>
-                {section?.section?.map((section, index) => {
+                {section.section.map((section, index) => {
                   return (
                     <div key={index} className="w-full">
                       <SectionAccordionContainer

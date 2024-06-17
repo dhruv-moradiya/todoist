@@ -3,7 +3,8 @@ import TodoMainSection from './TodoMainSection';
 function Today() {
   return (
     <div>
-      <TodoMainSection title="Today" />
+      {/* <TodoMainSection title="Today" /> */}
+      <h3>Today</h3>
     </div>
   );
 }

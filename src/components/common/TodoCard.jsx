@@ -1,5 +1,6 @@
 import React from 'react';
 import { Calendar, DragIcon, Edit } from '../../constants/svg';
+import { getDate } from './Models/helperModels';
 
 function TodoCard({ item }) {
   return (
@@ -10,21 +11,21 @@ function TodoCard({ item }) {
 
       <div>
         <div className="circle font-light">
-          <i className="ri-checkbox-blank-circle-line text-2xl font-extralight text-primary"></i>
+          <i className="ri-checkbox-blank-circle-line text-2xl font-earthlight text-primary"></i>
           <i className="ri-check-line check text-base text-primary"></i>
         </div>
       </div>
 
       <div className="mx-3 mr-auto flex grow flex-col gap-0">
         <h4 className="text-base font-medium tracking-wide">
-          Browse the Todoist Inspiration Hub {item}
+          {item.title} {item.order}
         </h4>
         <p className="text-xs tracking-wide">
-          For productivity advice and to sign up for our newsletter
+          {item.description}
         </p>
         <div className="my-1 flex items-center gap-1 font-semibold text-green-500">
           <Calendar />
-          <p className="text-[11.5px]">Tomorrow</p>
+          <p className="text-[11.5px]">{getDate(item.dueDate * 1000).currentDate.day}</p>
         </div>
       </div>
 

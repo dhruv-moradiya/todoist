@@ -1,5 +1,7 @@
 import { memo, useState } from 'react';
+
 import { ArrowDown, DueDate, Inbox, Priority } from '../../../constants/svg';
+
 import CustomButton from '../CustomButton';
 import ModelPriority from './ModelPriority';
 import ModelProjectSelect from './ModelProjectSelect';
@@ -12,11 +14,12 @@ import {
   openPriorityModel,
   openProjectSelectModelOpen,
 } from './helperModels';
-import { useDispatch } from 'react-redux';
 import { addTask } from '../../../redux/task/taskThunk';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef, section_id }) {
+
   const [isDueDateModelOpen, setIsDueDateModelOpen] = useState(false);
   const [isPriorityModelOpen, setPriorityModelOpen] = useState(false);
   const [isProjectModelOpen, setIsProjectModelOpen] = useState(false);
@@ -25,23 +28,25 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef, section_id }) {
   const [projectPath, setProjectPath] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
   const dispatch = useDispatch();
   const { project_id } = useParams();
 
-  console.log('projectPath', projectPath);
 
-  const taskObj = {
-    title,
-    description,
-    dueDate: getTimeStamp(dueDate),
-    priority,
-    project_id,
-    section_id,
-    completed: false,
-    task_add_date: Date.now(),
-  };
 
   function handleAddTask() {
+
+    const taskObj = {
+      title,
+      description,
+      dueDate: getTimeStamp(dueDate),
+      priority,
+      project_id,
+      section_id,
+      completed: false,
+      task_add_date: Math.floor(Date.now() / 1000),
+    };
+
     if (title || description) {
       console.log(project_id, section_id, taskObj);
       dispatch(
@@ -51,6 +56,7 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef, section_id }) {
           taskObj,
         })
       );
+      setIsTaskModelOpen(false)
     }
   }
 

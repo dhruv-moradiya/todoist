@@ -10,7 +10,7 @@
 
 // export const getTodos = createAsyncThunk('todos/getTodos', () => {
 //   try {
-//     const q = query(collection(db, 'todos'), orderBy('time', 'desc'));
+//     const q = query(collection(db, 'todos'), orderBy('time', 'asc'));
 //     return onSnapshot(q, (querySnapshot) => {
 //       return querySnapshot
 //         .docs()

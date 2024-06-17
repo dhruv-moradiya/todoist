@@ -22,8 +22,9 @@ import SignIn from './page/SignIn';
 import ProtectedRoute from './guard/ProtectedRoute';
 
 function App() {
+
   const dispatch = useDispatch();
-  // const user = JSON.parse();
+
   const [user, setUser] = useState(
     localStorage.getItem('todoist_user') || null
   );
@@ -33,14 +34,6 @@ function App() {
   }, []);
 
   const project = useSelector((store) => store.project);
-
-  // useEffect(() => {
-  //   if (!user) {
-  //     dispatch(
-  //       fetchUserData(JSON.parse(localStorage.getItem('todoist_user')).id)
-  //     );
-  //   }
-  // }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {

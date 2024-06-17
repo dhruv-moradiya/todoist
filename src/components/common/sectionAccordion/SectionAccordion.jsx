@@ -5,21 +5,28 @@ import DraggableCard from '../../inbox/DraggableCard';
 import { Arrow } from '../../../constants/svg';
 import ModelAddTask from '../Models/ModelAddTask';
 import SectionAccordionContainer from './SectionAccordionContainer';
+import { useSelector } from 'react-redux';
 
 function SectionAccordion({
-  task,
   activeSections,
-  activeSectionModal,
   handleClick,
   index,
   tasks,
   section,
 }) {
+
+  // console.log("SectionAccordion => section", section)
+
   const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
   const [data, setData] = useState(tasks);
 
   const btnRef = useRef(null);
   const addTaskModelRef = useRef(null);
+  const { task } = useSelector((store) => store.task)
+
+  const taskData = task.filter(item => item.section_id === section.section_id)
+
+
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -78,7 +85,7 @@ function SectionAccordion({
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
-                  <DraggableCard data={data} />
+                  <DraggableCard data={taskData} />
                   {provided.placeholder}
                 </ul>
               )}
