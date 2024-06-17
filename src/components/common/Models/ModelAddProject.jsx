@@ -1,7 +1,8 @@
 import CustomButton from '../CustomButton';
 import { useDispatch } from 'react-redux';
-import { addProject } from '../../../redux/thunk';
+// import { addProject } from '../../../redux/thunk';
 import { useState } from 'react';
+import { addProject } from '../../../redux/project/projectThunk';
 
 function ModelAddProject({ setAddProjectModelOpen }) {
   const [inputValue, setInputValue] = useState('');
@@ -9,6 +10,7 @@ function ModelAddProject({ setAddProjectModelOpen }) {
   const dispatch = useDispatch();
 
   async function handleClick() {
+    // dispatch(addProject(inputValue));
     dispatch(addProject(inputValue));
     setAddProjectModelOpen(false);
   }

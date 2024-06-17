@@ -1,24 +1,24 @@
-import { useEffect, useState } from 'react';
-import { fetchUserData } from '../redux/userSlice';
+import { useEffect } from 'react';
+
 import TodoMainSection from './TodoMainSection';
+
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { getSection } from '../redux/section/sectionThunk';
 
 function Inbox() {
-  const [data, setData] = useState([1, 2, 3, 4]);
-
   const dispatch = useDispatch();
 
+  const section = useSelector((store) => store.section);
+  console.log('sectionInbox', section);
+
   useEffect(() => {
-    dispatch(
-      fetchUserData(JSON.parse(localStorage.getItem('todoist_user')).id)
-      // fetchUserData("keoAMbgWq7bYEqgMrJztBaT0cxC3")
-    );
+    dispatch(getSection('inbox'));
   }, []);
 
-  return <TodoMainSection title="Inbox" />;
+  return <TodoMainSection project={null} section={section} title="Inbox" />;
 }
 
 export default Inbox;
 
-// // https://codesandbox.io/embed/github/Utkarshbhimte/beatiful-dnd-custom-placeholder/tree/master/?fontsize=14
+// https://codesandbox.io/embed/github/Utkarshbhimte/beatiful-dnd-custom-placeholder/tree/master/?fontsize=14

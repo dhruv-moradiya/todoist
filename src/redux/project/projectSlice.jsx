@@ -1,0 +1,46 @@
+import { createSlice } from '@reduxjs/toolkit';
+import { addProject, getProjects } from './projectThunk';
+
+const projectSlice = createSlice({
+  name: 'project',
+  initialState: {
+    isLoading: false,
+    isError: 'false',
+    project: [],
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    // addProject
+    builder.addCase(addProject.pending, (prevState) => {
+      prevState.isLoading = true;
+    });
+    builder.addCase(addProject.fulfilled, (prevState, action) => {
+      prevState.isLoading = false;
+      prevState.project.push(action.payload);
+      prevState.isError = false;
+    });
+    builder.addCase(addProject.rejected, (prevState) => {
+      prevState.isLoading = false;
+      prevState.project = [...prevState.todos];
+      prevState.isError = true;
+    });
+
+    // getProject
+    builder.addCase(getProjects.pending, (prevState) => {
+      prevState.isLoading = true;
+    });
+    builder.addCase(getProjects.fulfilled, (prevState, action) => {
+      prevState.isLoading = false;
+      prevState.project = action.payload;
+      prevState.isError = false;
+    });
+    builder.addCase(getProjects.rejected, (prevState) => {
+      prevState.isLoading = false;
+      prevState.project = [...prevState.todos];
+      prevState.isError = true;
+    });
+  },
+});
+
+const projectReducer = projectSlice.reducer;
+export default projectReducer;

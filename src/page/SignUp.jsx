@@ -55,8 +55,6 @@ function SignUp() {
               'todoist_user',
               JSON.stringify({
                 id: user.uid,
-                name: user.displayName,
-                photoURL: downloadURL,
                 email: user.email,
               })
             );

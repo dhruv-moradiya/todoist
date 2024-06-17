@@ -6,7 +6,8 @@ function SectionAccordionContainer({
   activeSections,
   handleClick,
   index,
-  project_id
+  project_id,
+  section,
 }) {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-2">
@@ -17,6 +18,7 @@ function SectionAccordionContainer({
         index={index}
         tasks={tasks}
         project_id={project_id}
+        section={section}
       />
     </div>
   );

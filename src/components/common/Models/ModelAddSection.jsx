@@ -2,36 +2,29 @@ import { memo, useState } from 'react';
 import CustomButton from '../CustomButton';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { addSection } from '../../../redux/thunk';
+import { addSection } from '../../../redux/section/sectionThunk';
 
 function ModelAddSection({ setIsSectionModelOpen, project_id: id }) {
   const dispatch = useDispatch();
   const [section, setSection] = useState('');
   const [error, setError] = useState(null);
 
-  // const { project_id } = useParams();
-
   function closeModel() {
     setIsSectionModelOpen(false);
   }
 
-  // function addSectionFun() {
-  //   if (!section) {
-  //     setError('Please add section name.');
-  //   } else {
-  //     dispatch(addSection(project_id, section));
-  //     setSection('');
-  //     setError('');
-  //   }
-  // }
-
   function addSectionToFireBase() {
-    dispatch(
-      addSection({ project_id: id ? id : 'inbox', section_name: section })
-    );
-    setSection('');
+    if (!section) {
+      setError('Please add section name.');
+    } else {
+      dispatch(
+        addSection({ project_id: id ? id : 'inbox', section_name: section })
+      );
+      setSection('');
+      setIsSectionModelOpen(false);
+    }
   }
-  console.log('id', id);
+
   return (
     <div className="m-8 w-full">
       <input

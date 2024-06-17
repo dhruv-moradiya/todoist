@@ -13,6 +13,7 @@ function SectionAccordion({
   handleClick,
   index,
   tasks,
+  section,
 }) {
   const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
   const [data, setData] = useState(tasks);
@@ -62,7 +63,7 @@ function SectionAccordion({
           >
             <Arrow />
           </div>
-          <h2 className="w-fit">(No section)</h2>
+          <h2 className="w-fit">{section?.section_name}</h2>
         </button>
       </div>
       <div
@@ -98,6 +99,7 @@ function SectionAccordion({
             <ModelAddTask
               setIsTaskModelOpen={setIsTaskModelOpen}
               addTaskModelRef={addTaskModelRef}
+              section_id={section.section_id}
             />
           )}
         </DragDropContext>

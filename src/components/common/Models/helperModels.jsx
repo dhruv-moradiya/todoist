@@ -118,6 +118,16 @@ export function getDate(timeStamp) {
   // return `${year}-${month < 10 ? '0' + month : month}-${date < 10 ? '0' + date : date}`;
 }
 
+export const getTimeStamp = (dateStr) => {
+  const date = new Date(`${dateStr}T00:00:00Z`);
+
+  const timestamp = date.getTime();
+
+  const unixTimestamp = Math.floor(timestamp / 1000);
+
+  return unixTimestamp;
+};
+
 export const dateButton = [
   {
     id: 'today',

@@ -7,14 +7,16 @@ import ModelDueDate from './ModelDueDate';
 import {
   closeModels,
   closeTaskModelOpen,
+  getTimeStamp,
   openDueDateModel,
   openPriorityModel,
   openProjectSelectModelOpen,
 } from './helperModels';
 import { useDispatch } from 'react-redux';
-import { addTodo } from '../../../redux/thunk';
+import { addTask } from '../../../redux/task/taskThunk';
+import { useParams } from 'react-router-dom';
 
-function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
+function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef, section_id }) {
   const [isDueDateModelOpen, setIsDueDateModelOpen] = useState(false);
   const [isPriorityModelOpen, setPriorityModelOpen] = useState(false);
   const [isProjectModelOpen, setIsProjectModelOpen] = useState(false);
@@ -23,10 +25,33 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
   const [projectPath, setProjectPath] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const { project_id } = useParams();
 
-  function handleAddTodo() {
-    dispatch(addTodo())
+  console.log('projectPath', projectPath);
+
+  const taskObj = {
+    title,
+    description,
+    dueDate: getTimeStamp(dueDate),
+    priority,
+    project_id,
+    section_id,
+    completed: false,
+    task_add_date: Date.now(),
+  };
+
+  function handleAddTask() {
+    if (title || description) {
+      console.log(project_id, section_id, taskObj);
+      dispatch(
+        addTask({
+          project_id: projectPath.project?.project_id,
+          section_id: projectPath.section?.section_id,
+          taskObj,
+        })
+      );
+    }
   }
 
   return (
@@ -56,7 +81,7 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
         {projectPath && (
           <p className="flex items-center gap-1 rounded-md border-[1px] border-gray-700 px-2 py-1 text-xs">
             <span className="text-xl">#</span>
-            <span> {projectPath}</span>
+            <span>{`${projectPath.project?.project_name}/${projectPath.section?.section_name}`}</span>
           </p>
         )}
       </div>
@@ -145,6 +170,7 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
           <CustomButton
             styles="section-button bg-primary hover:bg-red-600"
             buttonName="Add task"
+            onClick={handleAddTask}
           />
         </div>
       </div>

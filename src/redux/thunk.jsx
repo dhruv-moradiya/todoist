@@ -2,8 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { addDoc, collection, doc, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '../firebase/Firebase';
 
-
-
 export const addProject = createAsyncThunk('todos/addProject', async (name) => {
   const user = JSON.parse(localStorage.getItem('todoist_user'));
   const userRef = doc(db, 'user', user.id);
@@ -39,7 +37,7 @@ export const getProjects = createAsyncThunk('todos/getProjects', async () => {
 
 export const addSection = createAsyncThunk(
   'todos/addSection',
-  async ({ project_id, section_name }, { rejectWithValue }) => {
+  async ({ project_id, section_name }, { rejectWithValue, dispatch }) => {
     try {
       if (typeof section_name !== 'string') {
         throw new Error('section_name must be a string');
@@ -65,49 +63,55 @@ export const addSection = createAsyncThunk(
   }
 );
 
-export const getSection = createAsyncThunk("todos/getSection", async (project_id) => {
-  try {
-    const user = JSON.parse(localStorage.getItem('todoist_user'));
-    const userRef = doc(db, 'user', user.id);
-    const projectCollectionRef = collection(userRef, 'project');
-    const projectDocRef = doc(projectCollectionRef, project_id);
-    const collectionRef = collection(projectDocRef, 'section');
+export const getSection = createAsyncThunk(
+  'todos/getSection',
+  async (project_id) => {
+    try {
+      const user = JSON.parse(localStorage.getItem('todoist_user'));
+      const userRef = doc(db, 'user', user.id);
+      const projectCollectionRef = collection(userRef, 'project');
+      const projectDocRef = doc(projectCollectionRef, project_id);
+      const collectionRef = collection(projectDocRef, 'section');
 
-    const temp = { project_id, sectionData: [] }
-    const snapShot = await getDocs(collectionRef)
-    snapShot.forEach(doc => {
-      temp["sectionData"].push({ ...doc.data() })
-    })
+      // const temp = { project_id, sectionData: [] }
+      const temp = [];
+      const snapShot = await getDocs(collectionRef);
+      snapShot.forEach((doc) => {
+        // temp["sectionData"].push({ ...doc.data() })
+        temp.push({ project_id, ...doc.data() });
+      });
 
-    return temp;
-
-  } catch (error) {
-    console.log("Error: ", error)
+      return temp;
+    } catch (error) {
+      console.log('Error: ', error);
+    }
   }
-})
+);
 
-export const addTodo = createAsyncThunk("todos/addTodos", async ({ project_id, section_id, todoObj }, { rejectWithValue }) => {
-  try {
-    const user = JSON.parse(localStorage.getItem('todoist_user'));
-    const userRef = doc(db, 'user', user.id);
-    const projectCollectionRef = collection(userRef, "project")
-    const projectDocRef = doc(projectCollectionRef, project_id)
-    const sectionCollectionRef = collection(projectDocRef, 'section');
-    const sectionDocRef = doc(sectionCollectionRef, section_id)
-    const result = await addDoc(sectionDocRef, todoObj)
+export const addTodo = createAsyncThunk(
+  'todos/addTodos',
+  async ({ project_id, section_id, todoObj }, { rejectWithValue }) => {
+    try {
+      const user = JSON.parse(localStorage.getItem('todoist_user'));
+      const userRef = doc(db, 'user', user.id);
+      const projectCollectionRef = collection(userRef, 'project');
+      const projectDocRef = doc(projectCollectionRef, project_id);
+      const sectionCollectionRef = collection(projectDocRef, 'section');
+      const sectionDocRef = doc(sectionCollectionRef, section_id);
+      const result = await addDoc(sectionDocRef, todoObj);
 
-    return {
-      todo_id: result.id,
-      section_id,
-      project_id,
-      ...todoObj,
-    };
-
-  } catch (error) {
-    console.log("Error adding todo: ", error)
-    return rejectWithValue(error, message)
+      return {
+        todo_id: result.id,
+        section_id,
+        project_id,
+        ...todoObj,
+      };
+    } catch (error) {
+      console.log('Error adding todo: ', error);
+      return rejectWithValue(error, message);
+    }
   }
-})
+);
 
 const po = [
   {

@@ -8,24 +8,26 @@ import ModelAddProject from '../components/common/Models/ModelAddProject';
 import Loader from '../components/common/Loader';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase/Firebase';
+import ProjectName from '../components/sidebar/ProjectName';
 
 function SideBar() {
   const [addProjectModelOpen, setAddProjectModelOpen] = useState(false);
 
   const { setIsSidebarOpen } = useTodoContext();
   const userData = useSelector((store) => store.user.userData);
-  const projects = useSelector((store) => store.todos);
-  console.log('projects', projects);
+
+  const project = useSelector((store) => store.project);
+  console.log('project', project);
 
   function closeSidebar() {
     setIsSidebarOpen(false);
   }
 
   async function logOutUser() {
-    console.log("Log out")
-    await signOut(auth)
-    localStorage.removeItem("todoist_user")
-    console.log("User Log out.")
+    console.log('Log out');
+    await signOut(auth);
+    localStorage.removeItem('todoist_user');
+    console.log('User Log out.');
   }
 
   return (
@@ -75,7 +77,7 @@ function SideBar() {
       </div>
 
       {/* My Projects */}
-      <div className="scrollbar h-[calc(100vh - 370px)] flex flex-col gap-2 overflow-y-scroll">
+      <div className="scrollbar h-[calc(100vh - 370px)] flex flex-col gap-2 overflow-auto">
         <div className="flex items-center justify-between pl-2">
           <h3 className="text-base font-semibold">My Projects</h3>
           <i
@@ -87,28 +89,29 @@ function SideBar() {
           )}
         </div>
 
-        {projects.isLoading ? (
+        {project.isLoading ? (
           <div className="h-full w-full">
             <Loader />
           </div>
         ) : (
-          <>
-            {projects.todos?.map((item, index) => (
-              <Link to={`/${item.project_id}`} key={index}>
-                <div className="flex cursor-pointer items-center justify-between rounded-md px-2 py-1 hover:bg-amber-hover-effect">
-                  <div className="flex items-center gap-2">
-                    <i className="ri-hashtag"></i>
-                    <p className="text-base font-semibold">
-                      {item.project_name}
-                    </p>
-                  </div>
-                  <span className="material-symbols-outlined rounded-[3px] font-light hover:bg-[#80808024]">
-                    more_horiz
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </>
+          // <>
+          //   {project.project?.map((item, index) => (
+          //     <Link to={`/${item.project_id}`} key={index}>
+          //       <div className="flex cursor-pointer items-center justify-between rounded-md px-2 py-1 hover:bg-amber-hover-effect">
+          //         <div className="flex items-center gap-2">
+          //           <i className="ri-hashtag"></i>
+          //           <p className="text-base font-semibold">
+          //             {item.project_name}
+          //           </p>
+          //         </div>
+          //         <span className="material-symbols-outlined rounded-[3px] font-light hover:bg-[#80808024]">
+          //           more_horiz
+          //         </span>
+          //       </div>
+          //     </Link>
+          //   ))}
+          // </>
+          <ProjectName project={project.project} />
         )}
       </div>
     </div>
