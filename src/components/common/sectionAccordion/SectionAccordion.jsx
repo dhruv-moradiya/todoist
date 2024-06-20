@@ -5,6 +5,7 @@ import DraggableCard from '../../inbox/DraggableCard';
 import { Arrow } from '../../../constants/svg';
 import ModelAddTask from '../Models/ModelAddTask';
 import SectionAccordionContainer from './SectionAccordionContainer';
+<<<<<<< HEAD
 import { useSelector } from 'react-redux';
 
 function SectionAccordion({
@@ -18,10 +19,24 @@ function SectionAccordion({
 
   const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
   const [taskData, setTaskData] = useState([])
+=======
+
+function SectionAccordion({
+  task,
+  activeSections,
+  activeSectionModal,
+  handleClick,
+  index,
+  tasks,
+  section,
+}) {
+  const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
+>>>>>>> 67e6dd0f589a3c78f5b87dacf850c99af0b9fae7
   const [data, setData] = useState(tasks);
 
   const btnRef = useRef(null);
   const addTaskModelRef = useRef(null);
+<<<<<<< HEAD
   const { task } = useSelector((store) => store.task);
   console.log("SectionAccordion => tasks", task)
 
@@ -39,6 +54,8 @@ function SectionAccordion({
       .filter((item) => item.section_id === section.section_id)
       .filter((item) => item.completed !== true))
   }, [task])
+=======
+>>>>>>> 67e6dd0f589a3c78f5b87dacf850c99af0b9fae7
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -97,7 +114,11 @@ function SectionAccordion({
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
+<<<<<<< HEAD
                   <DraggableCard data={taskData} />
+=======
+                  <DraggableCard data={data} />
+>>>>>>> 67e6dd0f589a3c78f5b87dacf850c99af0b9fae7
                   {provided.placeholder}
                 </ul>
               )}

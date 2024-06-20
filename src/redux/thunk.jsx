@@ -23,7 +23,11 @@ export const getProjects = createAsyncThunk('todos/getProjects', async () => {
     const collectionRef = collection(userRef, 'project');
     const snapShot = await getDocs(
       collectionRef,
+<<<<<<< HEAD
       orderBy('project_name', 'asc')
+=======
+      orderBy('project_name', 'desc')
+>>>>>>> 67e6dd0f589a3c78f5b87dacf850c99af0b9fae7
     );
     const temp = [];
     snapShot.forEach((doc) => {

@@ -94,6 +94,26 @@ function SideBar() {
             <Loader />
           </div>
         ) : (
+<<<<<<< HEAD
+=======
+          // <>
+          //   {project.project?.map((item, index) => (
+          //     <Link to={`/${item.project_id}`} key={index}>
+          //       <div className="flex cursor-pointer items-center justify-between rounded-md px-2 py-1 hover:bg-amber-hover-effect">
+          //         <div className="flex items-center gap-2">
+          //           <i className="ri-hashtag"></i>
+          //           <p className="text-base font-semibold">
+          //             {item.project_name}
+          //           </p>
+          //         </div>
+          //         <span className="material-symbols-outlined rounded-[3px] font-light hover:bg-[#80808024]">
+          //           more_horiz
+          //         </span>
+          //       </div>
+          //     </Link>
+          //   ))}
+          // </>
+>>>>>>> 67e6dd0f589a3c78f5b87dacf850c99af0b9fae7
           <ProjectName project={project.project} />
         )}
       </div>

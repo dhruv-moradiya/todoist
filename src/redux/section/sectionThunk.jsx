@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { addDoc, collection, doc, getDocs, orderBy } from 'firebase/firestore';
+=======
+import { addDoc, collection, doc, getDocs } from 'firebase/firestore';
+>>>>>>> 67e6dd0f589a3c78f5b87dacf850c99af0b9fae7
 import { db } from '../../firebase/Firebase';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -42,10 +46,14 @@ export const getSection = createAsyncThunk(
 
       // const temp = { project_id, sectionData: [] };
       const temp = [];
+<<<<<<< HEAD
       const snapShot = await getDocs(
         collectionRef,
         orderBy('section_name', 'asc')
       );
+=======
+      const snapShot = await getDocs(collectionRef);
+>>>>>>> 67e6dd0f589a3c78f5b87dacf850c99af0b9fae7
       snapShot.forEach((doc) => {
         // temp['sectionData'].push({ section_id: doc.id, ...doc.data() });
         temp.push({ project_id, ...doc.data(), section_id: doc.id });
