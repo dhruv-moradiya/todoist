@@ -1,5 +1,7 @@
 import { memo, useState } from 'react';
+
 import { ArrowDown, DueDate, Inbox, Priority } from '../../../constants/svg';
+
 import CustomButton from '../CustomButton';
 import ModelPriority from './ModelPriority';
 import ModelProjectSelect from './ModelProjectSelect';
@@ -7,18 +9,62 @@ import ModelDueDate from './ModelDueDate';
 import {
   closeModels,
   closeTaskModelOpen,
+  getTimeStamp,
   openDueDateModel,
   openPriorityModel,
   openProjectSelectModelOpen,
 } from './helperModels';
+import { addTask } from '../../../redux/task/taskThunk';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
-function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
+function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef, section_id }) {
   const [isDueDateModelOpen, setIsDueDateModelOpen] = useState(false);
   const [isPriorityModelOpen, setPriorityModelOpen] = useState(false);
   const [isProjectModelOpen, setIsProjectModelOpen] = useState(false);
   const [dueDate, setDueDate] = useState(null);
   const [priority, setPriority] = useState(null);
   const [projectPath, setProjectPath] = useState(null);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [error, setError] = useState("")
+
+  console.log("error", error)
+
+  const dispatch = useDispatch();
+  const { project_id } = useParams();
+
+  function handleAddTask() {
+
+
+    if (!title || !description || !dueDate || !priority || !projectPath) {
+      setError("Please fill the form.")
+    } else {
+      const taskObj = {
+        title,
+        description,
+        dueDate: getTimeStamp(dueDate),
+        priority,
+        project_id,
+        section_id,
+        completed: false,
+        task_add_date: Math.floor(Date.now() / 1000),
+      };
+
+      dispatch(
+        addTask({
+          project_id: projectPath.project?.project_id,
+          section_id: projectPath.section?.section_id,
+          taskObj,
+        })
+      );
+      setIsTaskModelOpen(false);
+    }
+
+    if (title || description) {
+
+    }
+  }
 
   return (
     <div
@@ -32,6 +78,7 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
         )
       }
     >
+      {error && <p className='text-primary font-semibold text-xs text-left'>{error}</p>}
       <div className="flex flex-wrap items-center gap-3">
         {dueDate && (
           <p className="rounded-md bg-light-primary px-2 py-1 text-xs">
@@ -47,7 +94,7 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
         {projectPath && (
           <p className="flex items-center gap-1 rounded-md border-[1px] border-gray-700 px-2 py-1 text-xs">
             <span className="text-xl">#</span>
-            <span> {projectPath}</span>
+            <span>{`${projectPath.project?.project_name}/${projectPath.section?.section_name}`}</span>
           </p>
         )}
       </div>
@@ -55,11 +102,15 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
         type="text"
         placeholder="Task name"
         className="border-none bg-dark outline-0 placeholder:text-base placeholder:font-semibold"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
       />
       <textarea
         placeholder="Description"
         className="border-none bg-dark text-[13.5px] outline-0 placeholder:text-xs placeholder:font-semibold"
         rows={1}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
       />
       <div className="relative flex items-center gap-2">
         <Button
@@ -132,6 +183,7 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef }) {
           <CustomButton
             styles="section-button bg-primary hover:bg-red-600"
             buttonName="Add task"
+            onClick={handleAddTask}
           />
         </div>
       </div>

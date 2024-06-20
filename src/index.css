@@ -12,7 +12,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  fontfamily: 'Lato', sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 .material-symbols-outlined {
@@ -61,4 +61,8 @@
 
 .circle:hover .check {
   opacity: 1;
+}
+
+.completeTaskCheck {
+  position: absolute;
 }

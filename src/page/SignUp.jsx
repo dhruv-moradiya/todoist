@@ -1,6 +1,12 @@
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
+import { auth, db, storage } from '../firebase/Firebase';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { Timestamp, doc, setDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -8,14 +14,65 @@ function SignUp() {
     getValues,
   } = useForm();
 
-  function onSubmit(data) {
-    console.log('data', data);
+  async function createUser(data) {
+    console.log(data);
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      console.log('user', user);
+
+      const storageRef = ref(storage, `${data.name}/${Date.now()}`);
+
+      const uploadTask = uploadBytesResumable(storageRef, data.image[0].name);
+
+      uploadTask.on(
+        'state_changed',
+        null,
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            console.log('File available at', downloadURL);
+
+            await updateProfile(user, {
+              displayName: data.name,
+              photoURL: downloadURL,
+            });
+
+            await setDoc(doc(db, 'user', user.uid), {
+              id: user.uid,
+              name: user.displayName,
+              photoURL: downloadURL,
+              email: user.email,
+              time: Timestamp.now(),
+            });
+
+            localStorage.setItem(
+              'todoist_user',
+              JSON.stringify({
+                id: user.uid,
+                email: user.email,
+              })
+            );
+
+            navigate('/');
+          });
+        }
+      );
+    } catch (error) {
+      console.log('Error at create new user: ', error.message);
+    }
   }
+
   return (
     <div className="flex h-screen w-screen items-center justify-center bg-dark text-dark-font">
       <form
         className="flex flex-col items-center gap-2 text-[14px]"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(createUser)}
       >
         <h2 className="my-3 text-xl">Sign Up</h2>
         <div className="flex flex-col items-center gap-2">

@@ -1,13 +1,33 @@
-import React from 'react';
+import React, { memo, useState } from 'react';
 import { sidebarNavigation } from '../constants/sidebar';
 import { SideBarButton } from '../constants/svg';
 import { useTodoContext } from '../context/TodoContext';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import ModelAddProject from '../components/common/Models/ModelAddProject';
+import Loader from '../components/common/Loader';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase/Firebase';
+import ProjectName from '../components/sidebar/ProjectName';
 
 function SideBar() {
+  const [addProjectModelOpen, setAddProjectModelOpen] = useState(false);
+
   const { setIsSidebarOpen } = useTodoContext();
+  const userData = useSelector((store) => store.user.userData);
+
+  const project = useSelector((store) => store.project);
+  console.log('project', project);
 
   function closeSidebar() {
     setIsSidebarOpen(false);
+  }
+
+  async function logOutUser() {
+    console.log('Log out');
+    await signOut(auth);
+    localStorage.removeItem('todoist_user');
+    console.log('User Log out.');
   }
 
   return (
@@ -18,12 +38,13 @@ function SideBar() {
           <div className="h-7 w-7 overflow-hidden rounded-full">
             <img
               className="h-full w-full object-cover"
-              src="https://img.etimg.com/thumb/width-1200,height-1200,imgsize-37850,resizemode-75,msid-106580228/news/international/us/jujutsu-kaisen-preview-is-gojo-making-a-return-key-details-here.jpg"
-              alt="User"
+              src={userData?.photoURL}
+              alt={userData?.name}
             />
           </div>
-          <h3 className="text-base font-semibold">Gojo Saturo</h3>
+          <h3 className="text-base font-semibold">{userData?.name}</h3>
         </div>
+        <button onClick={logOutUser}>Logout</button>
         <button
           className="cursor-pointer rounded-md px-2 py-[5px] text-xl font-light hover:bg-amber-hover-effect"
           onClick={closeSidebar}
@@ -42,44 +63,42 @@ function SideBar() {
       <div className="flex flex-col gap-3 text-base">
         <ul className="flex flex-col gap-2">
           {sidebarNavigation.map((item, index) => (
-            <li
+            <Link
+              to={`${item.name === 'Inbox' ? '/' : '/' + item.name.toLowerCase()}`}
               key={index}
-              className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 hover:bg-amber-hover-effect"
             >
-              <i className={`${item.icon} text-xl`}></i>
-              <p>{item.name}</p>
-            </li>
+              <li className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 hover:bg-amber-hover-effect">
+                <i className={`${item.icon} text-xl`}></i>
+                <p>{item.name}</p>
+              </li>
+            </Link>
           ))}
         </ul>
       </div>
 
       {/* My Projects */}
-      <div className="flex flex-col gap-2">
+      <div className="scrollbar h-[calc(100vh - 370px)] flex flex-col gap-2 overflow-auto">
         <div className="flex items-center justify-between pl-2">
           <h3 className="text-base font-semibold">My Projects</h3>
-          <i className="ri-add-fill rounded-md px-1 py-[1px] text-xl hover:bg-amber-hover-effect"></i>
+          <i
+            className="ri-add-fill cursor-pointer rounded-md px-1 py-[1px] text-xl hover:bg-amber-hover-effect"
+            onClick={() => setAddProjectModelOpen(true)}
+          ></i>
+          {addProjectModelOpen && (
+            <ModelAddProject setAddProjectModelOpen={setAddProjectModelOpen} />
+          )}
         </div>
-        <div className="flex cursor-pointer items-center justify-between rounded-md px-2 py-1 hover:bg-amber-hover-effect">
-          <div className="flex items-center gap-2">
-            <i className="ri-hashtag"></i>
-            <p className="text-base font-semibold">Home</p>
+
+        {project.isLoading ? (
+          <div className="h-full w-full">
+            <Loader />
           </div>
-          <span className="material-symbols-outlined rounded-[3px] font-light hover:bg-[#80808024]">
-            more_horiz
-          </span>
-        </div>
-        <div className="flex cursor-pointer items-center justify-between rounded-md px-2 py-1 hover:bg-amber-hover-effect">
-          <div className="flex items-center gap-2">
-            <i className="ri-hashtag"></i>
-            <p className="text-base font-semibold">Home</p>
-          </div>
-          <span className="material-symbols-outlined rounded-[3px] font-light hover:bg-[#80808024]">
-            more_horiz
-          </span>
-        </div>
+        ) : (
+          <ProjectName project={project.project} />
+        )}
       </div>
     </div>
   );
 }
 
-export default SideBar;
+export default memo(SideBar);
