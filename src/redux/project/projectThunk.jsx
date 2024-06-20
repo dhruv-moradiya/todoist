@@ -28,7 +28,7 @@ export const getProjects = createAsyncThunk('todos/getProjects', async () => {
     );
     const temp = [];
     snapShot.forEach((doc) => {
-      temp.push({ project_id: doc.id, ...doc.data(), section: [] });
+      temp.push({ project_id: doc.id, ...doc.data() });
     });
     return temp;
   } catch (error) {

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addTask, getTask } from './taskThunk';
+import { addTask, completeTask, getTask } from './taskThunk';
+import Completed from '../../page/Completed';
 
 const taskSlice = createSlice({
   name: 'task',
@@ -10,7 +11,6 @@ const taskSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-
     builder.addCase(addTask.pending, (prevState) => {
       prevState.isLoading = true;
     });
@@ -23,7 +23,7 @@ const taskSlice = createSlice({
       prevState.isLoading = false;
       prevState.task = [...prevState.task];
       prevState.isError = true;
-    })
+    });
 
     builder.addCase(getTask.pending, (prevState) => {
       prevState.isLoading = true;
@@ -37,8 +37,30 @@ const taskSlice = createSlice({
       prevState.isLoading = false;
       prevState.task = [...prevState.task];
       prevState.isError = true;
-    })
-  }
+    });
+
+    builder.addCase(completeTask.pending, (prevState) => {
+      prevState.isLoading = true;
+    });
+    builder.addCase(completeTask.fulfilled, (prevState, action) => {
+      prevState.isLoading = false;
+      prevState.task = prevState.task.map((task) => {
+        if (
+          task.project_id === action.payload.project_id &&
+          task.section_id === action.payload.section_id
+        ) {
+          return { ...task, completed: true };
+        } else {
+          return (prevState.task = [...prevState.task]);
+        }
+      });
+    });
+    builder.addCase(completeTask.rejected, (prevState) => {
+      prevState.isLoading = false;
+      prevState.task = [...prevState.task];
+      prevState.isError = true;
+    });
+  },
 });
 
 const taskReducer = taskSlice.reducer;

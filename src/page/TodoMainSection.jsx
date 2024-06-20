@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import ModelAddSection from '../components/common/Models/ModelAddSection';
-import ViewNav from '../components/common/ViewNav';
 import SectionAccordionContainer from '../components/common/sectionAccordion/SectionAccordionContainer';
 import { useDispatch } from 'react-redux';
 import NoTaskOrSection from '../components/common/NoTaskOrSection';
@@ -23,40 +22,11 @@ function TodoMainSection({ project, section, title }) {
   }
 
   return (
-    <div className="scrollbar md:w-[calc(100% - 64px)] lg:w-[calc(100% - 160px)] xl:w-[calc(100% - 384px)] flex max-h-screen flex-col gap-2 overflow-y-scroll px-8 py-3 sm:px-12 md:px-8 lg:px-20 xl:px-48">
-      <ViewNav />
-
+    <div className="scrollbar md:w-[calc(100% - 64px)] lg:w-[calc(100% - 160px)] xl:w-[calc(100% - 384px)] flex h-full max-h-screen flex-col gap-2 overflow-y-scroll px-8 py-3 sm:px-12 md:px-8 lg:px-20 xl:px-48">
       <div className="flex w-full flex-col items-center justify-center gap-2">
         <h2 className="my-3 self-start text-3xl font-bold">
           {project?.project_name || title}
         </h2>
-
-        {/* {section?.map((section, index) => {
-          return (
-            <div key={index} className="w-full">
-              <SectionAccordionContainer
-                activeSections={activeSections}
-                handleClick={handleClick}
-                index={index}
-                project_id={project?.project_id}
-                section={section}
-              />
-
-              {isSectionModelOpen && index === activeSectionModal && (
-                <ModelAddSection
-                  setIsSectionModelOpen={setIsSectionModelOpen}
-                  project_id={project?.project_id}
-                />
-              )}
-              <AddSectionButtonBackup
-                setIsSectionModelOpen={setIsSectionModelOpen}
-                index={index}
-                setWhichSectionModel={setActiveSectionModal}
-              />
-
-            </div>
-          );
-        })} */}
 
         {section.isLoading ? (
           <div className="flex h-full w-full items-center justify-center">
@@ -115,7 +85,7 @@ function TodoMainSection({ project, section, title }) {
   );
 }
 
-export default TodoMainSection;
+export default memo(TodoMainSection);
 
 function AddSectionButtonBackup({
   setIsSectionModelOpen,

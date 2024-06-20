@@ -13,15 +13,18 @@ function Project() {
 
   const projects = useSelector((store) => store.project.project);
   const section = useSelector((store) => store.section);
-  const task = useSelector((store) => store.task)
-
-  console.log("Project => Task: ", task)
+  const task = useSelector((store) => store.task);
+  console.log("task", task)
 
   const project = projects.find((item) => item.project_id === param.project_id);
 
+  // console.log("Project => Task: ", task)
   useEffect(() => {
-    dispatch(getTask({ project_id: param ? param.project_id : 'inbox' }))
-    dispatch(getSection(param ? param.project_id : 'inbox'));
+    dispatch(getTask({ project_id: param.project_id }));
+  }, [param, section])
+
+  useEffect(() => {
+    dispatch(getSection(param.project_id));
   }, [param]);
 
   return <TodoMainSection project={project} section={section} />;

@@ -62,3 +62,7 @@
 .circle:hover .check {
   opacity: 1;
 }
+
+.completeTaskCheck {
+  position: absolute;
+}

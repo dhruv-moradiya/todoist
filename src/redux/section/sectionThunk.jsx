@@ -42,7 +42,10 @@ export const getSection = createAsyncThunk(
 
       // const temp = { project_id, sectionData: [] };
       const temp = [];
-      const snapShot = await getDocs(collectionRef, orderBy("section_name", "asc"));
+      const snapShot = await getDocs(
+        collectionRef,
+        orderBy('section_name', 'asc')
+      );
       snapShot.forEach((doc) => {
         // temp['sectionData'].push({ section_id: doc.id, ...doc.data() });
         temp.push({ project_id, ...doc.data(), section_id: doc.id });

@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import SideBar from './SideBar';
 import { useTodoContext } from '../context/TodoContext';
+import ViewNav from '../components/common/ViewNav';
 
 function Layout() {
   const { isSidebarOpen } = useTodoContext();
@@ -11,7 +12,10 @@ function Layout() {
       >
         <SideBar />
       </div>
-      <div className="w-full md:flex-[2]">
+      <div className="flex h-full w-full flex-col md:flex-[2]">
+        <div className="p-2">
+          <ViewNav />
+        </div>
         <Outlet />
       </div>
     </div>

@@ -4,12 +4,11 @@ import { Draggable } from 'react-beautiful-dnd';
 import TodoCard from '../common/TodoCard';
 
 function DraggableCard({ data = [] }) {
-  console.log("DraggableCard => data", data)
 
   function sorting(a, b) {
-    return a.order - b.order
+    return a.order - b.order;
   }
-  data.sort(sorting)
+  data.sort(sorting);
 
   return (
     <>

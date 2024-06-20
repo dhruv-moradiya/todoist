@@ -11,22 +11,34 @@ function SectionAccordion({
   activeSections,
   handleClick,
   index,
-  tasks,
+  tasks, // [1,2,3,4]
   section,
 }) {
-
-  // console.log("SectionAccordion => section", section)
+  // console.log("SectionAccordion => tasks", section)
 
   const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
+  const [taskData, setTaskData] = useState([])
   const [data, setData] = useState(tasks);
 
   const btnRef = useRef(null);
   const addTaskModelRef = useRef(null);
-  const { task } = useSelector((store) => store.task)
+  const { task } = useSelector((store) => store.task);
+  console.log("SectionAccordion => tasks", task)
 
-  const taskData = task.filter(item => item.section_id === section.section_id)
 
+  if (!task) {
+    return null;
+  }
 
+  // const taskData = task
+  //   .filter((item) => item.section_id === section.section_id)
+  //   .filter((item) => item.completed !== true);
+
+  useEffect(() => {
+    setTaskData(task
+      .filter((item) => item.section_id === section.section_id)
+      .filter((item) => item.completed !== true))
+  }, [task])
 
   useEffect(() => {
     function handleClickOutside(e) {

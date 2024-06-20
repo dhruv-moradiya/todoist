@@ -20,9 +20,10 @@ import Project from './page/Project';
 import SignUp from './page/SignUp';
 import SignIn from './page/SignIn';
 import ProtectedRoute from './guard/ProtectedRoute';
+import Upcoming from './page/Upcoming';
+import Completed from './page/Completed';
 
 function App() {
-
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(
@@ -33,7 +34,7 @@ function App() {
     dispatch(getProjects());
   }, []);
 
-  const project = useSelector((store) => store.project);
+  // const project = useSelector((store) => store.project);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -41,7 +42,7 @@ function App() {
       if (user) {
         dispatch(setUser({ id: user.uid, email: user.email }));
       } else {
-        dispatch(setUser(null));
+        dispatch(setUser(""));
       }
     });
     return () => unsubscribe();
@@ -63,6 +64,8 @@ function App() {
               />
               <Route path="/today" element={<Today />} />
               <Route path="/:project_id" element={<Project />} />
+              <Route path="/upcoming" element={<Upcoming />} />
+              <Route path="/completed" element={<Completed />} />
             </Route>
             <Route path="/login" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
