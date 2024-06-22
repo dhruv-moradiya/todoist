@@ -20,12 +20,19 @@ import Project from './page/Project';
 import SignUp from './page/SignUp';
 import SignIn from './page/SignIn';
 import ProtectedRoute from './guard/ProtectedRoute';
+<<<<<<< HEAD
 import Upcoming from './page/Upcoming';
 import Completed from './page/Completed';
 
 function App() {
   const dispatch = useDispatch();
 
+=======
+
+function App() {
+  const dispatch = useDispatch();
+
+>>>>>>> 67e6dd0f589a3c78f5b87dacf850c99af0b9fae7
   const [user, setUser] = useState(
     localStorage.getItem('todoist_user') || null
   );
@@ -34,7 +41,15 @@ function App() {
     dispatch(getProjects());
   }, []);
 
-  // const project = useSelector((store) => store.project);
+  const project = useSelector((store) => store.project);
+
+  // useEffect(() => {
+  //   if (!user) {
+  //     dispatch(
+  //       fetchUserData(JSON.parse(localStorage.getItem('todoist_user')).id)
+  //     );
+  //   }
+  // }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -42,7 +57,7 @@ function App() {
       if (user) {
         dispatch(setUser({ id: user.uid, email: user.email }));
       } else {
-        dispatch(setUser(""));
+        dispatch(setUser(null));
       }
     });
     return () => unsubscribe();
@@ -64,8 +79,6 @@ function App() {
               />
               <Route path="/today" element={<Today />} />
               <Route path="/:project_id" element={<Project />} />
-              <Route path="/upcoming" element={<Upcoming />} />
-              <Route path="/completed" element={<Completed />} />
             </Route>
             <Route path="/login" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />

@@ -6,6 +6,21 @@ import { Arrow } from '../../../constants/svg';
 import ModelAddTask from '../Models/ModelAddTask';
 import SectionAccordionContainer from './SectionAccordionContainer';
 import { useSelector } from 'react-redux';
+<<<<<<< HEAD
+import { useSelector } from 'react-redux';
+
+function SectionAccordion({
+  activeSections,
+  handleClick,
+  index,
+  tasks, // [1,2,3,4]
+  section,
+}) {
+  // console.log("SectionAccordion => tasks", section)
+
+  const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
+  const [taskData, setTaskData] = useState([])
+=======
 
 function SectionAccordion({
   activeSections,

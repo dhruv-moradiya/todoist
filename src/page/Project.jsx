@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { getSection } from '../redux/section/sectionThunk';
-import { getTask } from '../redux/task/taskThunk';
 
 function Project() {
   const dispatch = useDispatch();
@@ -13,8 +12,6 @@ function Project() {
 
   const projects = useSelector((store) => store.project.project);
   const section = useSelector((store) => store.section);
-  const task = useSelector((store) => store.task);
-  console.log("task", task)
 
   const project = projects.find((item) => item.project_id === param.project_id);
 
@@ -24,7 +21,7 @@ function Project() {
   }, [param, section])
 
   useEffect(() => {
-    dispatch(getSection(param.project_id));
+    dispatch(getSection(param ? param.project_id : 'inbox'));
   }, [param]);
 
   return <TodoMainSection project={project} section={section} />;

@@ -28,6 +28,7 @@ function TodoMainSection({ project, section, title }) {
           {project?.project_name || title}
         </h2>
 
+
         {section.isLoading ? (
           <div className="flex h-full w-full items-center justify-center">
             <Loader />

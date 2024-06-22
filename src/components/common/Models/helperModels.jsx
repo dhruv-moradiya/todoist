@@ -127,9 +127,13 @@ export function getDate(timeStamp) {
 }
 
 export const getTimeStamp = (dateStr) => {
+<<<<<<< HEAD
   const dateRev = dateStr.split('-').reverse().join('-');
 
   const date = new Date(`${dateRev}T00:00:00Z`);
+=======
+  const date = new Date(`${dateStr}T00:00:00Z`);
+>>>>>>> 67e6dd0f589a3c78f5b87dacf850c99af0b9fae7
 
   const timestamp = date.getTime();
 
