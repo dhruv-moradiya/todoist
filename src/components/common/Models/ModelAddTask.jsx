@@ -14,13 +14,8 @@ import {
   openPriorityModel,
   openProjectSelectModelOpen,
 } from './helperModels';
-<<<<<<< HEAD
 import { addTask } from '../../../redux/task/taskThunk';
 import { useDispatch } from 'react-redux';
-=======
-import { useDispatch } from 'react-redux';
-import { addTask } from '../../../redux/task/taskThunk';
->>>>>>> 67e6dd0f589a3c78f5b87dacf850c99af0b9fae7
 import { useParams } from 'react-router-dom';
 
 function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef, section_id }) {
@@ -32,7 +27,6 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef, section_id }) {
   const [projectPath, setProjectPath] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-<<<<<<< HEAD
   const [error, setError] = useState("")
 
   console.log("error", error)
@@ -57,27 +51,6 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef, section_id }) {
         task_add_date: Math.floor(Date.now() / 1000),
       };
 
-=======
-  const dispatch = useDispatch();
-  const { project_id } = useParams();
-
-  console.log('projectPath', projectPath);
-
-  const taskObj = {
-    title,
-    description,
-    dueDate: getTimeStamp(dueDate),
-    priority,
-    project_id,
-    section_id,
-    completed: false,
-    task_add_date: Date.now(),
-  };
-
-  function handleAddTask() {
-    if (title || description) {
-      console.log(project_id, section_id, taskObj);
->>>>>>> 67e6dd0f589a3c78f5b87dacf850c99af0b9fae7
       dispatch(
         addTask({
           project_id: projectPath.project?.project_id,
@@ -85,14 +58,11 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef, section_id }) {
           taskObj,
         })
       );
-<<<<<<< HEAD
       setIsTaskModelOpen(false);
     }
 
     if (title || description) {
 
-=======
->>>>>>> 67e6dd0f589a3c78f5b87dacf850c99af0b9fae7
     }
   }
 
