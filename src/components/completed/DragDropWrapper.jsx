@@ -5,7 +5,7 @@ import TodoCard from '../common/TodoCard';
 
 function DraggableCard({ data }) {
   function sorting(a, b) {
-    return Number(a.priority.title.split(" ")[1]) - Number(b.priority.title.split(" ")[1]);
+    return Number(a.priority?.title?.split(" ")[1]) - Number(b.priority?.title?.split(" ")[1]);
   }
   data.sort(sorting);
 

@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 
-import TodoMainSection from './TodoMainSection';
-
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getSection } from '../redux/section/sectionThunk';
+
+import TodoMainSection from './TodoMainSection';
 
 function Inbox() {
   const dispatch = useDispatch();

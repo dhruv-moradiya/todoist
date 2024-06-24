@@ -14,7 +14,7 @@ export const addSection = createAsyncThunk(
       const projectCollectionRef = collection(userRef, 'project');
       const projectDocRef = doc(projectCollectionRef, project_id);
       const collectionRef = collection(projectDocRef, 'section');
-      console.log('collectionRef', collectionRef);
+      // console.log('collectionRef', collectionRef);
 
       const result = await addDoc(collectionRef, { section_name });
 

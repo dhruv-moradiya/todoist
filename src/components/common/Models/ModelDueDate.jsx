@@ -1,6 +1,4 @@
 import { memo, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { NextWeek, NextWeekend, Today, Tomorrow } from '../../../constants/svg';
 import { dateButton, getDate } from './helperModels';
 
 function ModelDueDate({ setIsDueDateModelOpen, setDueDate }) {
@@ -8,17 +6,17 @@ function ModelDueDate({ setIsDueDateModelOpen, setDueDate }) {
     getDate(Date.now()).currentDate.date
   );
 
-  function handleClick(e, date) {
+  function handleClick(e, date, color) {
     e.stopPropagation();
 
     if (e.target.name === 'selectedDate') {
       const dueDateArray = e.target.value.split('-');
       setSelectedDate();
-      setDueDate(`${dueDateArray[2]}-${dueDateArray[1]}-${dueDateArray[0]}`);
+      setDueDate({ date: `${dueDateArray[2]}-${dueDateArray[1]}-${dueDateArray[0]}`, color });
       setIsDueDateModelOpen(false);
     } else {
       const dueDateArray = date.split('-');
-      setDueDate(`${dueDateArray[2]}-${dueDateArray[1]}-${dueDateArray[0]}`);
+      setDueDate({ date: `${dueDateArray[2]}-${dueDateArray[1]}-${dueDateArray[0]}`, color });
       setIsDueDateModelOpen(false);
     }
   }
@@ -43,9 +41,9 @@ function ModelDueDate({ setIsDueDateModelOpen, setDueDate }) {
               name="button"
               type="button"
               className="flex w-full items-center gap-1 rounded p-1 pr-2 hover:bg-dark"
-              onClick={(e) => handleClick(e, item.date)}
+              onClick={(e) => handleClick(e, item.date, item.color)}
             >
-              <div className={`${item.color} `}>{item.svg}</div>
+              <div style={{ color: item.color }}>{item.svg}</div>
               <p className="grow text-start font-bold">{item.title}</p>
               <p>
                 {item.day}-{item.date.split('-')[2]}

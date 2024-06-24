@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addTask, completeTask, getTask } from './taskThunk';
+import { addTask, completeTask, deleteTask, getTask } from './taskThunk';
 import Completed from '../../page/Completed';
 
 const taskSlice = createSlice({
@@ -11,6 +11,8 @@ const taskSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+
+    // * ADD TASK BUILDER
     builder.addCase(addTask.pending, (prevState) => {
       prevState.isLoading = true;
     });
@@ -25,6 +27,7 @@ const taskSlice = createSlice({
       prevState.isError = true;
     });
 
+    // * GET TASK BUILDER
     builder.addCase(getTask.pending, (prevState) => {
       prevState.isLoading = true;
     });
@@ -39,6 +42,7 @@ const taskSlice = createSlice({
       prevState.isError = true;
     });
 
+    // * COMPLETE TASK BUILDER
     builder.addCase(completeTask.pending, (prevState) => {
       prevState.isLoading = true;
     });
@@ -47,11 +51,13 @@ const taskSlice = createSlice({
       prevState.task = prevState.task.map((task) => {
         if (
           task.project_id === action.payload.project_id &&
-          task.section_id === action.payload.section_id
+          task.section_id === action.payload.section_id &&
+          task.task_id === action.payload.task_id
         ) {
+          console.log(action);
           return { ...task, completed: true };
         } else {
-          return (prevState.task = [...prevState.task]);
+          return { ...task };
         }
       });
     });
@@ -60,6 +66,29 @@ const taskSlice = createSlice({
       prevState.task = [...prevState.task];
       prevState.isError = true;
     });
+
+    // * DELETE TASK BUILDER
+    builder.addCase(deleteTask.pending, (prevState) => {
+      prevState.isLoading = true;
+    });
+    builder.addCase(deleteTask.fulfilled, (prevState, action) => {
+      prevState.task = prevState.task.filter((item) => {
+        if (
+          item.project_id === action.payload.project_id &&
+          item.section_id === action.payload.section_id &&
+          item.task_id === action.payload.task_id
+        ) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+    });
+    builder.addCase(deleteTask.rejected, (prevState) => {
+      prevState.isLoading = false;
+      prevState.task = [...prevState.task];
+      prevState.isError = true;
+    })
   },
 });
 

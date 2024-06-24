@@ -22,30 +22,32 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef, section_id }) {
   const [isDueDateModelOpen, setIsDueDateModelOpen] = useState(false);
   const [isPriorityModelOpen, setPriorityModelOpen] = useState(false);
   const [isProjectModelOpen, setIsProjectModelOpen] = useState(false);
-  const [dueDate, setDueDate] = useState(null);
-  const [priority, setPriority] = useState(null);
-  const [projectPath, setProjectPath] = useState(null);
+  const [dueDate, setDueDate] = useState('');
+  const [priority, setPriority] = useState('');
+  const [projectPath, setProjectPath] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [error, setError] = useState("")
+  const [error, setError] = useState('')
 
-  console.log("error", error)
+  console.log("error", dueDate)
 
   const dispatch = useDispatch();
   const { project_id } = useParams();
 
   function handleAddTask() {
 
+    console.log("projectPath", projectPath)
 
-    if (!title || !description || !dueDate || !priority || !projectPath) {
-      setError("Please fill the form.")
+
+    if (!title || !projectPath) {
+      setError("Task title and task path is required.")
     } else {
       const taskObj = {
         title,
         description,
-        dueDate: getTimeStamp(dueDate),
+        dueDate: dueDate ? getTimeStamp(dueDate) : '',
         priority,
-        project_id,
+        project_id: projectPath.project?.project_id,
         section_id,
         completed: false,
         task_add_date: Math.floor(Date.now() / 1000),
@@ -59,10 +61,6 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef, section_id }) {
         })
       );
       setIsTaskModelOpen(false);
-    }
-
-    if (title || description) {
-
     }
   }
 
@@ -81,8 +79,8 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef, section_id }) {
       {error && <p className='text-primary font-semibold text-xs text-left'>{error}</p>}
       <div className="flex flex-wrap items-center gap-3">
         {dueDate && (
-          <p className="rounded-md bg-light-primary px-2 py-1 text-xs">
-            {dueDate}
+          <p className="rounded-md px-2 py-1 text-xs" style={{ backgroundColor: dueDate.color }}>
+            {dueDate.date}
           </p>
         )}
         {priority && (

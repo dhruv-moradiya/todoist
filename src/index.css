@@ -36,12 +36,12 @@
 }
 
 .dragIcon,
-.editIcon {
+.editDeleteIcon {
   opacity: 0;
 }
 
 .todoBox:hover .dragIcon,
-.todoBox:hover .editIcon {
+.todoBox:hover .editDeleteIcon {
   opacity: 1;
 }
 

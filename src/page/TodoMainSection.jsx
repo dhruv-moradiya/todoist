@@ -1,12 +1,18 @@
 import { memo, useState } from 'react';
+
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import Loader from '../components/common/Loader';
+import NoTaskOrSection from '../components/common/NoTaskOrSection';
 import ModelAddSection from '../components/common/Models/ModelAddSection';
 import SectionAccordionContainer from '../components/common/sectionAccordion/SectionAccordionContainer';
-import { useDispatch } from 'react-redux';
-import NoTaskOrSection from '../components/common/NoTaskOrSection';
-import Loader from '../components/common/Loader';
 
 function TodoMainSection({ project, section, title }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+
+  const task = useSelector((store) => store.task);
+
   const [isSectionModelOpen, setIsSectionModelOpen] = useState(false);
   const [activeSectionModal, setActiveSectionModal] = useState(0); // Kya section nu model open chhe.
   const [activeSections, setActiveSections] = useState([0]); // kyo section open chhe.
@@ -28,8 +34,7 @@ function TodoMainSection({ project, section, title }) {
           {project?.project_name || title}
         </h2>
 
-
-        {section.isLoading ? (
+        {section.isLoading && task.isLoading ? (
           <div className="flex h-full w-full items-center justify-center">
             <Loader />
           </div>

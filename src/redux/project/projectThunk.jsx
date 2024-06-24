@@ -1,6 +1,7 @@
-import { addDoc, collection, doc, getDocs, orderBy } from 'firebase/firestore';
-import { db } from '../../firebase/Firebase';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
+import { db } from '../../firebase/Firebase';
+import { addDoc, collection, doc, getDocs, orderBy } from 'firebase/firestore';
 
 export const addProject = createAsyncThunk('todos/addProject', async (name) => {
   const user = JSON.parse(localStorage.getItem('todoist_user'));

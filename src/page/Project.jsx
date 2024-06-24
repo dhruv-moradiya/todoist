@@ -1,10 +1,14 @@
-import { useParams } from 'react-router-dom';
-import TodoMainSection from './TodoMainSection';
-import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+
 import { getSection } from '../redux/section/sectionThunk';
+import { getTask } from '../redux/task/taskThunk';
+
+import TodoMainSection from './TodoMainSection';
+
 
 function Project() {
   const dispatch = useDispatch();
@@ -12,6 +16,8 @@ function Project() {
 
   const projects = useSelector((store) => store.project.project);
   const section = useSelector((store) => store.section);
+
+  // console.log("task", task)
 
   const project = projects.find((item) => item.project_id === param.project_id);
 
@@ -21,7 +27,7 @@ function Project() {
   }, [param, section])
 
   useEffect(() => {
-    dispatch(getSection(param ? param.project_id : 'inbox'));
+    dispatch(getSection(param.project_id));
   }, [param]);
 
   return <TodoMainSection project={project} section={section} />;

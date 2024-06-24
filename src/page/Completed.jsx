@@ -11,6 +11,8 @@ function Completed() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
 
+  console.log("tasks", tasks)
+
   const user = JSON.parse(localStorage.getItem('todoist_user'));
   const userRef = doc(db, 'user', user.id);
   const projectCollectionRef = collection(userRef, 'project');

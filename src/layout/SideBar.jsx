@@ -17,7 +17,7 @@ function SideBar() {
   const userData = useSelector((store) => store.user.userData);
 
   const project = useSelector((store) => store.project);
-  console.log('project', project);
+  // console.log('project', project);
 
   function closeSidebar() {
     setIsSidebarOpen(false);

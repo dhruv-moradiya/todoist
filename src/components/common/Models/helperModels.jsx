@@ -70,14 +70,23 @@ export function openProjectSelectModelOpen(
 /* ModelDueDate [Start] */
 
 export function getDate(timeStamp) {
+  // const day = [
+  //   'Sunday',
+  //   'Monday',
+  //   'Tuesday',
+  //   'Wednesday',
+  //   'Thursday',
+  //   'Friday',
+  //   'Saturday',
+  // ];
   const day = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    ' Sunday',
+    { day: 'Sunday', color: 'yellow' },
+    { day: 'Monday', color: 'green' },
+    { day: 'Tuesday', color: 'yellow' },
+    { day: 'Wednesday', color: 'yellow' },
+    { day: 'Thursday', color: 'yellow' },
+    { day: 'Friday', color: 'yellow' },
+    { day: 'Saturday', color: 'purple' },
   ];
 
   const today = new Date(timeStamp);
@@ -127,13 +136,9 @@ export function getDate(timeStamp) {
 }
 
 export const getTimeStamp = (dateStr) => {
-<<<<<<< HEAD
   const dateRev = dateStr.split('-').reverse().join('-');
 
   const date = new Date(`${dateRev}T00:00:00Z`);
-=======
-  const date = new Date(`${dateStr}T00:00:00Z`);
->>>>>>> 67e6dd0f589a3c78f5b87dacf850c99af0b9fae7
 
   const timestamp = date.getTime();
 
@@ -147,31 +152,31 @@ export const dateButton = [
     id: 'today',
     title: 'Today',
     svg: <Today />,
-    day: getDate(Date.now()).currentDate.day,
+    day: getDate(Date.now()).currentDate.day.day,
     date: getDate(Date.now()).currentDate.date,
-    color: 'text-green-600',
+    color: 'rgba(8, 171, 64, 0.7)',
   },
   {
     id: 'tomorrow',
     title: 'Tomorrow',
     svg: <Tomorrow />,
-    day: getDate(Date.now()).tomorrowDate.day,
+    day: getDate(Date.now()).tomorrowDate.day.day,
     date: getDate(Date.now()).tomorrowDate.date,
-    color: 'text-orange-600',
+    color: 'rgba(216, 158, 12, 0.71)'
   },
   {
     title: 'Next Weekend',
     svg: <NextWeekend />,
-    day: getDate(Date.now()).weekend.day,
+    day: getDate(Date.now()).weekend.day.day,
     date: getDate(Date.now()).weekend.date,
-    color: 'text-blue-600',
+    color: 'rgba(12, 36, 216, 0.71)',
   },
   {
     title: 'Next Week',
     svg: <NextWeek />,
-    day: getDate(Date.now()).next_week.day,
+    day: getDate(Date.now()).next_week.day.day,
     date: getDate(Date.now()).next_week.date,
-    color: 'text-purple-600',
+    color: 'rgba(111, 28, 224, 0.71)',
   },
 ];
 

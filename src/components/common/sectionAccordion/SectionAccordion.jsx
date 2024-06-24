@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import AddTaskButton from '../../inbox/AddTaskButton';
 import DraggableCard from '../../inbox/DraggableCard';
@@ -6,21 +6,6 @@ import { Arrow } from '../../../constants/svg';
 import ModelAddTask from '../Models/ModelAddTask';
 import SectionAccordionContainer from './SectionAccordionContainer';
 import { useSelector } from 'react-redux';
-<<<<<<< HEAD
-import { useSelector } from 'react-redux';
-
-function SectionAccordion({
-  activeSections,
-  handleClick,
-  index,
-  tasks, // [1,2,3,4]
-  section,
-}) {
-  // console.log("SectionAccordion => tasks", section)
-
-  const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
-  const [taskData, setTaskData] = useState([])
-=======
 
 function SectionAccordion({
   activeSections,
@@ -38,22 +23,27 @@ function SectionAccordion({
   const btnRef = useRef(null);
   const addTaskModelRef = useRef(null);
   const { task } = useSelector((store) => store.task);
-  console.log("SectionAccordion => tasks", task)
+  console.log("SectionAccordion => taskData", task)
 
 
   if (!task) {
     return null;
   }
 
-  // const taskData = task
-  //   .filter((item) => item.section_id === section.section_id)
-  //   .filter((item) => item.completed !== true);
+
+  // const updateTaskData = useCallback(() => {
+  //   console.log("useCallback")
+  //   setTaskData(task
+  //     .filter((item) => item.section_id === section.section_id)
+  //     .filter((item) => item.completed !== true))
+  // }, [task])
 
   useEffect(() => {
     setTaskData(task
       .filter((item) => item.section_id === section.section_id)
       .filter((item) => item.completed !== true))
-  }, [task])
+  }, [task]);
+
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -84,6 +74,8 @@ function SectionAccordion({
     reorderedData.splice(destination.index, 0, movedItem);
     setData(reorderedData);
   }
+
+
 
   return (
     <div key={index} className="w-full">

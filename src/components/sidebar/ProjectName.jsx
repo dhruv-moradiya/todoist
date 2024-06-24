@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ShowMore } from '../../constants/svg';
 
 function ProjectName(project) {
-  console.log('project', project);
+  // console.log('project', project);
   return (
     <>
       {project.project?.map((item, index) => (

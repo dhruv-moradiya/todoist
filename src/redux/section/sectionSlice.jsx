@@ -14,7 +14,7 @@ const sectionSlice = createSlice({
       prevState.isLoading = true;
     });
     builder.addCase(addSection.fulfilled, (prevState, action) => {
-      console.log('prevState', current(prevState.section));
+      // console.log('prevState', current(prevState.section));
       prevState.isLoading = false;
       prevState.section.push(action.payload);
       prevState.isError = false;
