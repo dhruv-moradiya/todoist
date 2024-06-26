@@ -4,12 +4,6 @@ import { Draggable } from 'react-beautiful-dnd';
 import TodoCard from '../common/TodoCard';
 
 function DraggableCard({ data = [] }) {
-
-  function sorting(a, b) {
-    return a.order - b.order;
-  }
-  data.sort(sorting);
-
   return (
     <>
       {data.map((item, index) => (

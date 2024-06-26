@@ -4,9 +4,12 @@ import { auth, db, storage } from '../firebase/Firebase';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { Timestamp, doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUserState } from '../redux/userSlice';
 
 function SignUp() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     register,
     formState: { errors },
@@ -48,13 +51,23 @@ function SignUp() {
               name: user.displayName,
               photoURL: downloadURL,
               email: user.email,
-              time: Timestamp.now(),
             });
 
             localStorage.setItem(
               'todoist_user',
               JSON.stringify({
                 id: user.uid,
+                name: user.displayName,
+                photoURL: downloadURL,
+                email: user.email,
+              })
+            );
+
+            dispatch(
+              setUserState({
+                id: user.uid,
+                name: user.displayName,
+                photoURL: downloadURL,
                 email: user.email,
               })
             );

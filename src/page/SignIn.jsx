@@ -1,9 +1,10 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
-import { auth } from '../firebase/Firebase';
+import { auth, db } from '../firebase/Firebase';
 import { useNavigate } from 'react-router-dom';
-import { setUser } from '../redux/userSlice';
 import { useDispatch } from 'react-redux';
+import { collection, doc, getDoc } from 'firebase/firestore';
+import { setUserState } from '../redux/userSlice';
 
 function SignIn() {
   const navigate = useNavigate();
@@ -21,22 +22,19 @@ function SignIn() {
       data.email,
       data.password
     );
-    console.log('userSignIn', user);
     const { uid, email } = user;
 
+    const collectionRef = collection(db, 'user')
+    const docRef = doc(collectionRef, uid)
+    const userDocData = await getDoc(docRef)
+
     dispatch(
-      setUser({
-        id: uid,
-        email: email,
-      })
+      setUserState(userDocData.data())
     );
 
     localStorage.setItem(
       'todoist_user',
-      JSON.stringify({
-        id: uid,
-        email: email,
-      })
+      JSON.stringify(userDocData.data())
     );
     navigate('/');
   }
@@ -102,7 +100,7 @@ function SignIn() {
         </div>
       </form>
     </div>
-  );
+  )
 }
 
 export default SignIn;

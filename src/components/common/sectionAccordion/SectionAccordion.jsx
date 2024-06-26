@@ -2,10 +2,12 @@ import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import AddTaskButton from '../../inbox/AddTaskButton';
 import DraggableCard from '../../inbox/DraggableCard';
-import { Arrow } from '../../../constants/svg';
+import { Arrow, Delete } from '../../../constants/svg';
 import ModelAddTask from '../Models/ModelAddTask';
 import SectionAccordionContainer from './SectionAccordionContainer';
 import { useSelector } from 'react-redux';
+import { deleteSection } from '../../../redux/section/sectionThunk';
+import { useDispatch } from 'react-redux';
 
 function SectionAccordion({
   activeSections,
@@ -13,30 +15,20 @@ function SectionAccordion({
   index,
   tasks, // [1,2,3,4]
   section,
+  project_id,
 }) {
-  // console.log("SectionAccordion => tasks", section)
-
   const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
   const [taskData, setTaskData] = useState([])
-  const [data, setData] = useState(tasks);
 
   const btnRef = useRef(null);
   const addTaskModelRef = useRef(null);
   const { task } = useSelector((store) => store.task);
-  console.log("SectionAccordion => taskData", task)
+  const dispatch = useDispatch()
 
 
   if (!task) {
     return null;
   }
-
-
-  // const updateTaskData = useCallback(() => {
-  //   console.log("useCallback")
-  //   setTaskData(task
-  //     .filter((item) => item.section_id === section.section_id)
-  //     .filter((item) => item.completed !== true))
-  // }, [task])
 
   useEffect(() => {
     setTaskData(task
@@ -69,17 +61,19 @@ function SectionAccordion({
 
     if (source.index === destination.index) return;
 
-    const reorderedData = Array.from(data);
+    const reorderedData = Array.from(taskData);
     const [movedItem] = reorderedData.splice(source.index, 1);
     reorderedData.splice(destination.index, 0, movedItem);
-    setData(reorderedData);
+    setTaskData(reorderedData);
   }
 
-
+  function deleteSectionFun() {
+    dispatch(deleteSection({ project_id: project_id || 'inbox', section_id: section.section_id }))
+  }
 
   return (
     <div key={index} className="w-full">
-      <div>
+      <div className='flex items-center justify-between border-b-[1px] border-slate-800 mb-2'>
         <button
           className="mb-3 flex w-full items-center gap-1 self-start  text-[16.5px] font-semibold"
           onClick={() => handleClick(index)}
@@ -90,6 +84,9 @@ function SectionAccordion({
             <Arrow />
           </div>
           <h2 className="w-fit">{section?.section_name}</h2>
+        </button>
+        <button className='pr-2 text-dark-font' onClick={deleteSectionFun}>
+          <i className="ri-delete-bin-6-fill"></i>
         </button>
       </div>
       <div
@@ -113,14 +110,11 @@ function SectionAccordion({
 
           <AddTaskButton
             index={index}
-            // activeSectionModal={activeSectionModal}
-            // setActiveSectionModal={setActiveSectionModal}
             isTaskModelOpen={isTaskModelOpen}
             setIsTaskModelOpen={setIsTaskModelOpen}
             btnRef={btnRef}
           />
 
-          {/* {isTaskModelOpen && index === activeSectionModal && ( */}
           {isTaskModelOpen && (
             <ModelAddTask
               setIsTaskModelOpen={setIsTaskModelOpen}

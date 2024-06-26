@@ -10,7 +10,6 @@ function Inbox() {
   const dispatch = useDispatch();
 
   const section = useSelector((store) => store.section);
-  console.log('sectionInbox', section);
 
   useEffect(() => {
     dispatch(getSection('inbox'));

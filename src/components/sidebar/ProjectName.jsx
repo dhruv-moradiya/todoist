@@ -1,8 +1,15 @@
 import { Link } from 'react-router-dom';
 import { ShowMore } from '../../constants/svg';
+import { useDispatch } from 'react-redux';
+import { deleteProject } from '../../redux/project/projectThunk';
 
 function ProjectName(project) {
-  // console.log('project', project);
+  const dispatch = useDispatch();
+
+  function deleteProjectFun(id) {
+    dispatch(deleteProject({ project_id: id }));
+  }
+
   return (
     <>
       {project.project?.map((item, index) => (
@@ -12,10 +19,13 @@ function ProjectName(project) {
               <i className="ri-hashtag"></i>
               <p className="text-base font-semibold">{item.project_name}</p>
             </div>
-            {/* <span className="material-symbols-outlined rounded-[3px] font-light hover:bg-[#80808024]">
-              more_horiz
-            </span> */}
-            <ShowMore />
+            <button
+              className="flex h-5 w-5 items-center justify-center rounded-[4px] p-3 hover:bg-dark"
+              onClick={() => deleteProjectFun(item.project_id)}
+            >
+              {/* <ShowMore /> */}
+              <i className="ri-delete-bin-3-line text-base"></i>
+            </button>
           </div>
         </Link>
       ))}

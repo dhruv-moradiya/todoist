@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addProject, getProjects } from './projectThunk';
+import { addProject, deleteProject, getProjects } from './projectThunk';
 
 const projectSlice = createSlice({
   name: 'project',
@@ -10,7 +10,7 @@ const projectSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    // addProject
+    // * ADD-PROJECT THUNK
     builder.addCase(addProject.pending, (prevState) => {
       prevState.isLoading = true;
     });
@@ -25,7 +25,7 @@ const projectSlice = createSlice({
       prevState.isError = true;
     });
 
-    // getProject
+    // * GET-PROJECT THUNK
     builder.addCase(getProjects.pending, (prevState) => {
       prevState.isLoading = true;
     });
@@ -35,6 +35,23 @@ const projectSlice = createSlice({
       prevState.isError = false;
     });
     builder.addCase(getProjects.rejected, (prevState) => {
+      prevState.isLoading = false;
+      prevState.project = [...prevState.todos];
+      prevState.isError = true;
+    });
+
+    // * DELETE-PROJECT THUNK
+    builder.addCase(deleteProject.pending, (prevState) => {
+      prevState.isLoading = true;
+    });
+    builder.addCase(deleteProject.fulfilled, (prevState, action) => {
+      prevState.isLoading = false;
+      prevState.project = prevState.project.filter((item) => {
+        return item.project_id !== action.payload;
+      });
+      prevState.isError = false;
+    });
+    builder.addCase(deleteProject.rejected, (prevState) => {
       prevState.isLoading = false;
       prevState.project = [...prevState.todos];
       prevState.isError = true;

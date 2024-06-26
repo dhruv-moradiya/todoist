@@ -30,28 +30,29 @@ const userSlice = createSlice({
     error: false,
   },
   reducers: {
-    setUser: (prevState, action) => {
+    setUserState: (prevState, action) => {
+      console.log('action', action)
       prevState.userData = action.payload;
     },
   },
   extraReducers: (builder) => {
-    // builder.addCase(fetchUserData.pending, (prevState, action) => {
-    //   prevState.isLoading = true;
-    // }),
-    //   builder.addCase(fetchUserData.fulfilled, (prevState, action) => {
-    //     (prevState.isLoading = false),
-    //       (prevState.error = false),
-    //       (prevState.userData = action.payload);
-    //   }),
-    //   builder.addCase(fetchUserData.rejected, (prevState, action) => {
-    //     (prevState.isLoading = false),
-    //       (prevState.error = true),
-    //       (prevState.userData = null);
-    //   });
+    builder.addCase(fetchUserData.pending, (prevState, action) => {
+      prevState.isLoading = true;
+    });
+    builder.addCase(fetchUserData.fulfilled, (prevState, action) => {
+      prevState.isLoading = false;
+      prevState.error = false;
+      prevState.userData = action.payload;
+    });
+    builder.addCase(fetchUserData.rejected, (prevState, action) => {
+      prevState.isLoading = false;
+      prevState.error = true;
+      prevState.userData = null;
+    });
   },
 });
 
 const userReducer = userSlice.reducer;
 
-export const { setUser } = userSlice.actions;
+export const { setUserState } = userSlice.actions;
 export default userReducer;

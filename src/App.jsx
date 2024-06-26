@@ -1,17 +1,15 @@
-//  123456eroR@12#
+//123456eroR@12#
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-// import { getProjects } from './redux/thunk';
-import { useSelector } from 'react-redux';
+import { setUserState } from './redux/userSlice'
 import { getProjects } from './redux/project/projectThunk';
 
 import { TodoContextProvider } from './context/TodoContext';
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/Firebase';
-import { fetchUserData, setUser } from './redux/userSlice';
 
 import Layout from './layout/Layout';
 import Inbox from './page/Inbox';
@@ -27,25 +25,27 @@ function App() {
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(
-    localStorage.getItem('todoist_user') || {}
+    JSON.parse(localStorage.getItem('todoist_user'))
   );
 
   useEffect(() => {
-    dispatch(getProjects());
-  }, []);
-
-  // const project = useSelector((store) => store.project);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      // console.log('UserAuth', user);
-      if (user) {
-        dispatch(setUser({ id: user.uid, email: user.email }));
+    const unsubscribe = onAuthStateChanged(auth, async (userAuth) => {
+      const user = JSON.parse(localStorage.getItem('todoist_user'))
+      console.log("user", user);
+      if (userAuth) {
+        console.log("userAuth");
+        dispatch(
+          setUserState(user)
+        );
       } else {
-        dispatch(setUser(""));
+        dispatch(setUserState(""));
       }
     });
     return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    dispatch(getProjects());
   }, []);
 
   return (
@@ -57,7 +57,7 @@ function App() {
               <Route
                 index
                 element={
-                  <ProtectedRoute user={user}>
+                  <ProtectedRoute >
                     <Inbox />
                   </ProtectedRoute>
                 }

@@ -1,5 +1,5 @@
-import { createSlice, current } from '@reduxjs/toolkit';
-import { addSection, getSection } from './sectionThunk';
+import { createSlice } from '@reduxjs/toolkit';
+import { addSection, deleteSection, getSection } from './sectionThunk';
 
 const sectionSlice = createSlice({
   name: 'section',
@@ -10,11 +10,11 @@ const sectionSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+    // * ADD SECTION THUNK
     builder.addCase(addSection.pending, (prevState) => {
       prevState.isLoading = true;
     });
     builder.addCase(addSection.fulfilled, (prevState, action) => {
-      // console.log('prevState', current(prevState.section));
       prevState.isLoading = false;
       prevState.section.push(action.payload);
       prevState.isError = false;
@@ -25,6 +25,7 @@ const sectionSlice = createSlice({
       prevState.isError = true;
     });
 
+    // * GET SECTION THUNK
     builder.addCase(getSection.pending, (prevState) => {
       prevState.isLoading = true;
     });
@@ -34,6 +35,28 @@ const sectionSlice = createSlice({
       prevState.isError = false;
     });
     builder.addCase(getSection.rejected, (prevState) => {
+      prevState.isLoading = false;
+      prevState.section = [...prevState.section];
+      prevState.isError = true;
+    });
+
+    // * DELETE SECTION THUNK
+    builder.addCase(deleteSection.pending, (prevState) => {
+      prevState.isLoading = true;
+    });
+    builder.addCase(deleteSection.fulfilled, (prevState, action) => {
+      prevState.isLoading = false;
+      prevState.section = prevState.section.filter((item) => {
+        if (
+          item.project_id === action.payload.project_id &&
+          item.section_id === action.payload.section_id
+        )
+          return false;
+        else true;
+      });
+      prevState.isError = false;
+    });
+    builder.addCase(deleteSection.rejected, (prevState) => {
       prevState.isLoading = false;
       prevState.section = [...prevState.section];
       prevState.isError = true;

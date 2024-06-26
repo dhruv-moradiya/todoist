@@ -13,11 +13,7 @@ import { db } from '../../firebase/Firebase';
 export const addTask = createAsyncThunk(
   'task/addTask',
   async ({ project_id, section_id, taskObj }, { getState, dispatch }) => {
-    console.log(
-      'TaskThunk => taskObj',
-      '\n TaskObj \n',
-      taskObj
-    );
+
     try {
       const user = JSON.parse(localStorage.getItem('todoist_user'));
       if (!user) {

@@ -44,7 +44,7 @@ function TodoCard({ item }) {
 
       <div className="mx-3 mr-auto flex grow flex-col gap-0">
         <h4 className="text-base font-medium tracking-wide">
-          {item.title} {item.order}
+          {item.title}
         </h4>
         <p className="text-xs tracking-wide">{item.description}</p>
         {item.dueDate && (
@@ -63,11 +63,11 @@ function TodoCard({ item }) {
       </div>
 
       <div className="editDeleteIcon w-[100px] cursor-pointer flex item-center gap-3">
-        <button>
+        <button className='text-[16px]'>
           <Edit />
         </button>
         <button onClick={deleteTaskFun}>
-          <i className="ri-delete-bin-4-line text-[20px]"></i>
+          <i className="ri-delete-bin-4-line text-[16px]"></i>
         </button>
       </div>
     </>

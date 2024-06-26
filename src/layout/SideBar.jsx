@@ -15,9 +15,8 @@ function SideBar() {
 
   const { setIsSidebarOpen } = useTodoContext();
   const userData = useSelector((store) => store.user.userData);
-
+  console.log("userData", userData);
   const project = useSelector((store) => store.project);
-  // console.log('project', project);
 
   function closeSidebar() {
     setIsSidebarOpen(false);

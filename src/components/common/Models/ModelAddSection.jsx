@@ -26,11 +26,11 @@ function ModelAddSection({ setIsSectionModelOpen, project_id: id }) {
   }
 
   return (
-    <div className="m-8 w-full">
+    <div className="m-2 w-full">
       <input
         type="text"
-        placeholder="Name this section"
-        className="w-full rounded-md border-[1px] border-gray-800 bg-dark p-1 text-base outline-0 placeholder:font-semibold"
+        placeholder="Name of the section"
+        className="w-full rounded-md border-[1px] border-gray-800 bg-dark p-1 text-base outline-0"
         value={section}
         onChange={(e) => setSection(e.target.value)}
       />

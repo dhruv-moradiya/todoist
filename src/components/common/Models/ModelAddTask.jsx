@@ -16,7 +16,6 @@ import {
 } from './helperModels';
 import { addTask } from '../../../redux/task/taskThunk';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
 function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef, section_id }) {
   const [isDueDateModelOpen, setIsDueDateModelOpen] = useState(false);
@@ -29,15 +28,10 @@ function ModelAddTask({ setIsTaskModelOpen, addTaskModelRef, section_id }) {
   const [description, setDescription] = useState('');
   const [error, setError] = useState('')
 
-  console.log("error", dueDate)
 
   const dispatch = useDispatch();
-  const { project_id } = useParams();
 
   function handleAddTask() {
-
-    console.log("projectPath", projectPath)
-
 
     if (!title || !projectPath) {
       setError("Task title and task path is required.")
